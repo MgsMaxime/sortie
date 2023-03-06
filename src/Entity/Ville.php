@@ -6,6 +6,8 @@ use App\Repository\VilleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: VilleRepository::class)]
 class Ville
@@ -14,14 +16,14 @@ class Ville
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    #[Assert\NotBlank(message: "Veuillez rentrer le nom de la ville")]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
-
+    #[Assert\NotBlank(message: "Veuillez rentrer le code postal de votre ville")]
     #[ORM\Column]
     private ?int $codePostal = null;
 
-    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Lieu::class)]
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Lieu::class, cascade:['persist', 'remove'] )]
     private Collection $lieux;
 
     public function __construct()

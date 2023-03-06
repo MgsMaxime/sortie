@@ -6,6 +6,7 @@ use App\Repository\EtatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EtatRepository::class)]
 class Etat
@@ -14,11 +15,11 @@ class Etat
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    #[Assert\Choice(["En création", "Ouverte", "Clôturée", "Activitée en cours","Activitée Terminée", "Annulée", "Activitée historisée"])]
     #[ORM\Column(length: 50)]
     private ?string $libelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'etat', targetEntity: Sortie::class)]
+    #[ORM\OneToMany(mappedBy: 'etat', targetEntity: Sortie::class, cascade: ['persist', 'remove'])]
     private Collection $sorties;
 
     public function __construct()

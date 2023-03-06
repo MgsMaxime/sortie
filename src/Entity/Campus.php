@@ -6,6 +6,8 @@ use App\Repository\CampusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: CampusRepository::class)]
 class Campus
@@ -14,14 +16,15 @@ class Campus
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    #[Assert\NotBlank(message: "Il nous faut un nom de campus")]
+    #[Assert\Choice(["Rennes", "Quimper", "Niort", "Nantes"])]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'sorties', targetEntity: Participant::class)]
     private Collection $participants;
 
-    #[ORM\OneToMany(mappedBy: 'siteOrganisateur', targetEntity: Sortie::class)]
+    #[ORM\OneToMany(mappedBy: 'siteOrganisateur', targetEntity: Sortie::class, cascade: ['persist', 'remove'])]
     private Collection $sorties;
 
     public function __construct()

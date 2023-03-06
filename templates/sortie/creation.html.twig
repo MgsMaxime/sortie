@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% form_theme serieForm 'view/formTheme/formTheme.html.twig' %}
+
+{% block title %}
+{% endblock %}
+
+{% block body %}
+    {# début du form #}
+    {{ form_start(sortieForm) }}
+
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(sortieForm.name) }}
+        {{ form_widget(sortieForm.name) }}
+        {{ form_errors(sortieForm.name) }}
+    </div>
+
+    {# affichage du reste du form #}
+    {{ form_rest(serieForm) }}
+
+    <button>Enregistrer</button>
+    <button>Publier</button>
+    <button>Annuler</button>
+    {# fin du formulaire #}
+    {{ form_end(sortieForm) }}
+{% endblock %}
