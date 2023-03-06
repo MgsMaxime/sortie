@@ -35,16 +35,12 @@ class AppFixtures extends Fixture
             $participant->setRoles(['ROLE_USER']);
             $participant->setActif($faker->boolean());
 
-            $manager->persist($participant);
-
             $ville->setNom($faker->randomElement(['Saint Herblain', 'Chartres de Bretagne', 'Quimper', 'Niort']));
             $ville->setCodePostal($faker->numberBetween(00001,99999));
             $etat->setLibelle($faker->randomElement(['En cours', 'Fermé', 'Ouvert', 'En création']));
             $lieu->setNom($faker->randomElement(['Patinoire', 'Laser game', 'Bowling', 'Escape Game', 'Piscine', 'Bar', 'BK', 'Cinema']));
             $lieu->setRue($faker->name);
             $lieu->setVille($ville);
-
-            $manager->persist($lieu);
 
             $campus->setNom($faker->randomElement(['Saint Herblain', 'Chartres de Bretagne', 'Quimper', 'Niort']));
 
@@ -59,6 +55,11 @@ class AppFixtures extends Fixture
             $sortie->setSiteOrganisateur($campus);
             $sortie->setOrganisateur($participant);
 
+            $manager->persist($etat);
+            $manager->persist($ville);
+            $manager->persist($campus);
+            $manager->persist($lieu);
+            $manager->persist($participant);
             $manager->persist($sortie);
         }
 
