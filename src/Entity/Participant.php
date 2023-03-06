@@ -39,8 +39,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, unique: true)]
     private ?string $mail = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $motPasse = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $actif = null;
@@ -178,18 +176,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMail(string $mail): self
     {
         $this->mail = $mail;
-
-        return $this;
-    }
-
-    public function getMotPasse(): ?string
-    {
-        return $this->motPasse;
-    }
-
-    public function setMotPasse(string $motPasse): self
-    {
-        $this->motPasse = $motPasse;
 
         return $this;
     }
