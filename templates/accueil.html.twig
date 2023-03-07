@@ -16,6 +16,7 @@
         <div class="filtres_gauche">
             <label for="select_campus">Campus</label>
             <select name="select_campus" id="select_campus">
+                <option value="tousLesCampus">Tous les campus</option>
                 {% for campus in campus %}
                     <option value="{{ campus.nom }}">{{ campus.nom | capitalize }}</option>
                 {% endfor %}
@@ -44,6 +45,14 @@
         </div>
     </div>
     </form>
+
+    <div>
+        {% if sorties %}
+        {% for sortie in sorties %}
+            <div>{{ sortie.nom }} | {{ sortie.etat.libelle }} | {{ sortie.organisateur.nom }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
 
 
 {% endblock %}
