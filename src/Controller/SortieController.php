@@ -4,10 +4,7 @@ namespace App\Controller;
 
 use App\DataFixtures\AppFixtures;
 use App\Repository\CampusRepository;
-use App\Repository\ParticipantRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\SortieRepository;
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,7 +37,17 @@ class SortieController extends AbstractController
                 $qb->andWhere("s.siteOrganisateur = getValue()");
             }*/
 
-            //if ($_GET["checkbox_orga"]) $qb->andWhere("s.organisateur = $this->getUser()");
+/*            if ($_GET["checkbox_orga"]) {
+                $user = $this->getUser()->getPseudo();
+                $qb->andWhere('s.organisateur.pseudo = :pseudo');
+                $qb->setParameter('pseudo', $user);
+            }*/
+
+/*            if ($_GET["checkbox_inscrit"]){
+                $user = $this->getUser()->getPseudo();
+                $qb->andWhere('s.organisateur.pseudo = :pseudo');
+                $qb->setParameter('pseudo', $user);
+            }*/
 
             $sorties = $qb->getQuery()->getResult();
 
