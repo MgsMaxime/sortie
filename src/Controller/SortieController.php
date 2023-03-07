@@ -5,6 +5,10 @@ namespace App\Controller;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
+use App\DataFixtures\AppFixtures;
+use App\Repository\CampusRepository;
+use App\Repository\ParticipantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +17,25 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/sortie', name: 'sortie_')]
 class SortieController extends AbstractController
 {
+    #[Route('/accueil', name: 'sortie_accueil')]
+    public function accueil(EntityManagerInterface $manager, AppFixtures $fixtures, CampusRepository $campusRepository): Response
+    {
+        $campus = $campusRepository->findAll();
+        $dateDuJour = new \DateTime('now');
+        //$fixtures->load($manager);
+
+        if ($_GET) {
+            //TODO requête parametrée : jointure entre les tables intéressantes et boucle sur les éléments du get
+            //pour les intégrer dans la requête
+        }
+
+        return $this->render('/accueil.html.twig', [
+            'campus' => $campus,
+            'dateDuJour' => $dateDuJour,
+            'participant' => $this->getUser()
+        ]);
+    }
+
     #[Route('/creation', name: 'creation')]
     public function creation(SortieRepository $sortieRepository, Request $request): Response
     {
@@ -60,22 +83,17 @@ class SortieController extends AbstractController
     {
         return $this->render('sortie/supprimer.html.twig');
     }
-
     #[Route('/publier', name: 'publier')]
     public function publier()
     {
         return $this->render('sortie/publier.html.twig');
     }
-
     #[Route('/annuler', name: 'annuler')]
     public function annuler()
     {
         return $this->render('sortie/annuler.html.twig');
     }
 
-    #[Route('/accueil', name: 'accueil')]
-    public function accueil()
-    {
-        return $this->render('accueil.html.twig');
-    }
+
+
 }
