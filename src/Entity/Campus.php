@@ -16,6 +16,7 @@ class Campus
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
     #[Assert\NotBlank(message: "Il nous faut un nom de campus")]
     #[Assert\Choice(["Rennes", "Quimper", "Niort", "Nantes"])]
     #[ORM\Column(length: 255)]
@@ -109,4 +110,6 @@ class Campus
 
         return $this;
     }
+
+
 }
