@@ -16,9 +16,9 @@
         <div class="filtres_gauche">
             <label for="select_campus">Campus</label>
             <select name="select_campus" id="select_campus">
-                {% for campus in campus %}
-                    <option value="{{ campus.nom }}">{{ campus.nom | capitalize }}</option>
-                {% endfor %}
+{#                {% for campus in campus %}#}
+{#                    <option value="{{ campus.nom }}">{{ campus.nom | capitalize }}</option>#}
+{#                {% endfor %}#}
             </select>
             <label for="search">Le nom de la sortie contient : </label>
             <input type="search" id="search" name="search">

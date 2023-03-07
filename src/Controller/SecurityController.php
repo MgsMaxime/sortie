@@ -14,7 +14,7 @@ class SecurityController extends AbstractController
     {
         // si user déjà loggé, le redirige vers accueil
          if ($this->getUser()) {
-             //return $this->redirectToRoute('sortie_accueil');
+             //return $this->redirectToRoute('accueil');
              $participant = $this->getUser();
              return $this->render('accueil.html.twig',['participant' => $participant]);
          }

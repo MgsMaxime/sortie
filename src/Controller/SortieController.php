@@ -11,12 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
-    #[Route('/accueil', name: 'accueil')]
+    #[Route('/accueil', name: 'sortie_accueil')]
     public function accueil(EntityManagerInterface $manager, AppFixtures $fixtures, CampusRepository $campusRepository): Response
     {
-        $campus = $campusRepository->findAll();
+        //$campus = $campusRepository->findAll();
 
-        $fixtures->load($manager);
+        //$fixtures->load($manager);
 
         if ($_GET){
             //TODO requête parametrée : jointure entre les tables intéressantes et boucle sur les éléments du get
@@ -24,8 +24,6 @@ class SortieController extends AbstractController
         }
 
 
-        return $this->render('/accueil.html.twig', [
-            'campus' => $campus,
-        ]);
+        return $this->render('/accueil.html.twig');
     }
 }
