@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Sortie;
+use App\Form\ModifierSortieType;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use App\DataFixtures\AppFixtures;
@@ -41,7 +42,7 @@ class SortieController extends AbstractController
     {
         $sortie = new Sortie();
 
-        //Création d'une instance de form lié à une instance de série
+        //Création d'une instance de form lié à une instance de sortie
         $sortieForm = $this->createForm(sortieType::class, $sortie);
 
 
@@ -55,7 +56,7 @@ class SortieController extends AbstractController
 
             $this->addFlash("success", "Sortie Ajouté !");
 
-            //redirige vers la page de détail de la série
+            //redirige vers la page accueil
             return $this->redirectToRoute('sortie_accueil', ['id' => $sortie->getId()]);
         }
 
@@ -73,9 +74,30 @@ class SortieController extends AbstractController
     }
 
     #[Route('/modifier', name: 'modifier')]
-    public function modifier()
+    public function modifier(SortieRepository $sortieRepository, Request $request)
     {
-        return $this->render('sortie/modifier.html.twig');
+        $sortie = new  Sortie();
+
+        //Création du formulaire modifier sortie
+        $sortieForm = $this->createForm(ModifierSortieType::class, $sortie);
+
+        //Méthode qui extrait les éléments du formulaire
+        $sortieForm->handleRequest($request);
+
+        if ($sortieForm->isSubmitted() && $sortieForm->isValid()){
+
+            //sauvegarde en BDD la création de l'event
+            $sortieRepository->save($sortie, true);;
+
+            $this->addFlash("success","Sortie Ajoué !");
+
+            //redirige vers la page accueil
+            return $this->redirectToRoute('sortie_afficher') ;
+        }
+
+        return $this->render('sortie/modifier.html.twig', [
+            'ModfierSortie'=> $sortieForm->createView()
+        ]);
     }
 
     #[Route('/supprimer', name: 'supprimer')]

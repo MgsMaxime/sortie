@@ -1,48 +1,47 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-<div class="infos_user">
-    <div class="date_jour">
-        <h3>Date du jour : {{ dateDuJour | date ('d-m-Y') }}</h3>
+    <div class="infos_user">
+        <div class="date_jour">
+            <h3>Date du jour : {{ dateDuJour | date ('d-m-Y') }}</h3>
+        </div>
+        <div class="user">
+            <h3>Participant : {{ participant.userIdentifier }}</h3>
+        </div>
     </div>
-    <div class="user">
-        <h3>Participant : {{ participant.userIdentifier }}</h3>
-    </div>
-</div>
     <form action="{{ path('sortie_accueil') }}" method="get">
-    <div class="filtres">
-        <h4>Filtrer les sorties</h4>
-        <div class="filtres_gauche">
-            <label for="select_campus">Campus</label>
-            <select name="select_campus" id="select_campus">
-                {% for campus in campus %}
-                    <option value="{{ campus.nom }}">{{ campus.nom | capitalize }}</option>
-                {% endfor %}
-            </select>
-            <label for="search">Le nom de la sortie contient : </label>
-            <input type="search" id="search" name="search">
-            <label for="date_debut">Entre</label>
-            <input type="date" name="date_debut" id="date_debut">
-            <label for="date_fin"> et </label>
-            <input type="date" name="date_fin" id="date_fin">
+        <div class="filtres">
+            <h4>Filtrer les sorties</h4>
+            <div class="filtres_gauche">
+                <label for="select_campus">Campus</label>
+                <select name="select_campus" id="select_campus">
+                    {% for campus in campus %}
+                        <option value="{{ campus.nom }}">{{ campus.nom | capitalize }}</option>
+                    {% endfor %}
+                </select>
+                <label for="search">Le nom de la sortie contient : </label>
+                <input type="search" id="search" name="search">
+                <label for="date_debut">Entre</label>
+                <input type="date" name="date_debut" id="date_debut">
+                <label for="date_fin"> et </label>
+                <input type="date" name="date_fin" id="date_fin">
+            </div>
+            <div class="filtres_droite">
+                <input type="checkbox" id="checkbox_orga" name="checkbox_orga">
+                <label for="checkbox_orga">Sorties dont je suis l'organisateur/trice</label>
+                <input type="checkbox" id="checkbox_inscrit" name="checkbox_inscrit">
+                <label for="checkbox_inscrit">Sorties auxquelles je suis inscrit/e</label>
+                <input type="checkbox" id="checkbox_pas_inscrit" name="checkbox_pas_inscrit">
+                <label for="checkbox_pas_inscrit">Sorties auxquelles je ne suis pas inscrit/e</label>
+                <input type="checkbox" id="checkbox_old" name="checkbox_old">
+                <label for="checkbox_old">Sorties passées</label>
+            </div>
+            <div class="bouton_rechercher">
+                <button type="submit">
+                    Rechercher
+                </button>
+            </div>
         </div>
-        <div class="filtres_droite">
-            <input type="checkbox" id="checkbox_orga" name="checkbox_orga">
-            <label for="checkbox_orga">Sorties dont je suis l'organisateur/trice</label>
-            <input type="checkbox" id="checkbox_inscrit" name="checkbox_inscrit">
-            <label for="checkbox_inscrit">Sorties auxquelles je suis inscrit/e</label>
-            <input type="checkbox" id="checkbox_pas_inscrit" name="checkbox_pas_inscrit">
-            <label for="checkbox_pas_inscrit">Sorties auxquelles je ne suis pas inscrit/e</label>
-            <input type="checkbox" id="checkbox_old" name="checkbox_old">
-            <label for="checkbox_old">Sorties passées</label>
-        </div>
-        <div class="bouton_rechercher">
-            <button type="submit">
-                Rechercher
-            </button>
-        </div>
-    </div>
     </form>
 
 

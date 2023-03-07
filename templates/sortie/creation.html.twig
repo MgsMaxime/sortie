@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 {% form_theme sortieForm 'formTheme/formTheme.html.twig' %}
 
-{% block title %}
-{% endblock %}
+
+    {% block title %}
+        {{ parent() }} |Creation d'un événement !
+    {% endblock %}
 
 {% block body %}
     {# début du form #}
@@ -19,7 +21,7 @@
     {{ form_rest(sortieForm) }}
 
     <button>Enregistrer</button>
-    <button>Publier</button>
+    <button>Publier la sortie</button>
     <button>Annuler</button>
     {# fin du formulaire #}
     {{ form_end(sortieForm) }}
