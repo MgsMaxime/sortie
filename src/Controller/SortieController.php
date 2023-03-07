@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/sortie', name: 'sortie_')]
 class SortieController extends AbstractController
 {
-    #[Route('/accueil', name: 'sortie_accueil')]
+    #[Route('/accueil', name: 'accueil')]
     public function accueil(EntityManagerInterface $manager, AppFixtures $fixtures, CampusRepository $campusRepository): Response
     {
         $campus = $campusRepository->findAll();
