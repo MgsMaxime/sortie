@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\DataFixtures\AppFixtures;
 use App\Repository\CampusRepository;
+use App\Repository\ParticipantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +18,7 @@ class SortieController extends AbstractController
     public function accueil(SortieRepository $sortieRepository,AppFixtures $fixtures, CampusRepository $campusRepository): Response
     {
         $campus = $campusRepository->findAll();
-
+        $dateDuJour = new \DateTime('now');
         //$fixtures->load($manager);
 
         $sorties =[];
@@ -44,9 +46,11 @@ class SortieController extends AbstractController
 
         }
 
-
-        return $this->render('/accueil.html.twig', [
-            'campus' => $campus, "sorties" => $sorties
+        return $this->render('/accueil.html.twig',[
+            'campus' => $campus,
+            'dateDuJour' => $dateDuJour,
+            'participant' => $this->getUser(),
+            "sorties" => $sorties
         ]);
     }
 }
