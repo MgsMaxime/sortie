@@ -191,4 +191,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function removeSortie(Sortie $param)
+    {
+    }
+
+    public function addSortie(Sortie $param)
+    {
+    }
 }

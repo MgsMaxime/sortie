@@ -6,6 +6,8 @@ use App\Repository\LieuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
 class Lieu
@@ -14,10 +16,10 @@ class Lieu
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    #[Assert\NotBlank(message: "Nous avons besoins du nom du lieu de l'événement")]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
-
+    #[Assert\NotBlank(message: "Nous avons besoins d'une rue")]
     #[ORM\Column(length: 255)]
     private ?string $rue = null;
 
@@ -26,7 +28,7 @@ class Lieu
 
     #[ORM\Column(nullable: true)]
     private ?float $longitude = null;
-
+    #[Assert\NotBlank(message: "Nous avons besoins d'une ville")]
     #[ORM\ManyToOne(inversedBy: 'lieux')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Ville $ville = null;

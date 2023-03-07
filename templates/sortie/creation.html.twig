@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% form_theme serieForm 'view/formTheme/formTheme.html.twig' %}
+{% form_theme sortieForm 'formTheme/formTheme.html.twig' %}
 
 {% block title %}
 {% endblock %}
@@ -10,13 +10,13 @@
 
     <div class="creation-sortie">
         {# découpage par champ #}
-        {{ form_label(sortieForm.name) }}
-        {{ form_widget(sortieForm.name) }}
-        {{ form_errors(sortieForm.name) }}
+        {{ form_label(sortieForm.nom) }}
+        {{ form_widget(sortieForm.nom) }}
+        {{ form_errors(sortieForm.nom) }}
     </div>
 
     {# affichage du reste du form #}
-    {{ form_rest(serieForm) }}
+    {{ form_rest(sortieForm) }}
 
     <button>Enregistrer</button>
     <button>Publier</button>

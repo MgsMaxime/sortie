@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
 use App\Entity\Sortie;
-use Doctrine\DBAL\Types\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,18 +20,19 @@ class SortieType extends AbstractType
             ->add('dateHeureDebut', DateType::class, [
                 'label'=>'First air date : ',
                 'html5'=> true,
-                'widget'=>'single text'
+                'widget'=>'single_text'
             ])
             ->add('duree')
             ->add('dateLimiteInscription', DateType::class, [
                 'label'=>'First air date : ',
                 'html5'=> true,
-                'widget'=>'single text'
+                'widget'=>'single_text'
             ])
             ->add('nbInscriptionsMax')
             ->add('infosSortie')
-            ->add('campus', 'text', array(
-                'label'=>'Field',
+            ->add('siteOrganisateur', EntityType::class, array(
+                'class' => Campus::class,
+                'label'=>'Campus',
                 'empty_data'=>'default value'
             ))
             ->add('organisateur')

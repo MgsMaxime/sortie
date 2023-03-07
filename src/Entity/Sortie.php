@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -15,22 +17,35 @@ class Sortie
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    #[Assert\NotBlank(message: "Il faut un nom pour l'événement")]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: "Minimum de {{ limit }} caractéres s'il vous plaîts",
+        maxMessage: "Maximum de {{ limit }} caractéres s'il vous plaîts"
+    )]
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
-
+    #[Assert\NotBlank(message: "Nous avons besoins d'une date de début")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column]
     private ?int $duree = null;
-
+    #[Assert\NotBlank(message: "Nous avons besoins d'une date")]
+    #[Assert\LessThan(
+        propertyPath: "dateHeureDebut",
+        message: "Cette date doit être inférieure à la date de début"
+    )]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
     private ?int $nbInscriptionsMax = null;
-
+    #[Assert\Length(
+        max: 3000,
+        maxMessage: "Maximum {{ limit }} caractères s'il vous plaîts"
+    )]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $infosSortie = null;
 
@@ -171,7 +186,7 @@ class Sortie
     {
         if (!$this->participants->contains($participant)) {
             $this->participants->add($participant);
-            $participant->addSorty($this);
+            $participant->addSortie($this);
         }
 
         return $this;
@@ -180,7 +195,7 @@ class Sortie
     public function removeParticipant(Participant $participant): self
     {
         if ($this->participants->removeElement($participant)) {
-            $participant->removeSorty($this);
+            $participant->removeSortie($this);
         }
 
         return $this;
