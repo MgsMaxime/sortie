@@ -43,6 +43,8 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, unique: true)]
     private ?string $mail = null;
 
+    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
+    private Collection $sorties;
 
     #[ORM\Column(nullable: true)]
     private ?bool $actif = null;
@@ -240,5 +242,21 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addSortie(Sortie $param)
     {
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getSorties(): Collection
+    {
+        return $this->sorties;
+    }
+
+    /**
+     * @param Collection $sorties
+     */
+    public function setSorties(Collection $sorties): void
+    {
+        $this->sorties = $sorties;
     }
 }

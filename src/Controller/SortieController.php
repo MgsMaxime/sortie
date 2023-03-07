@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     #[Route('/accueil', name: 'accueil')]
-    public function accueil(EntityManagerInterface $manager, AppFixtures $fixtures, CampusRepository $campusRepository): Response
+    public function accueil(SortieRepository $sortieRepository, EntityManagerInterface $manager, AppFixtures $fixtures, CampusRepository $campusRepository): Response
     {
         $campus = $campusRepository->findAll();
         $dateDuJour = new \DateTime('now');
@@ -36,24 +36,43 @@ class SortieController extends AbstractController
                 ->leftJoin('s.etat', 'etat')
                 ->addSelect('etat')
                 ->leftJoin('s.organisateur', 'orga')
+                ->leftJoin('s.participants', 'part')
                 ->addSelect('orga')
+                ->addSelect('part')
             ;
 
-            /*if (!$_GET["tousLesCampus"]){
+            /*if (!isset($_GET["tousLesCampus"])){
                 $qb->andWhere("s.siteOrganisateur = getValue()");
             }*/
 
-/*            if ($_GET["checkbox_orga"]) {
-                $user = $this->getUser()->getPseudo();
-                $qb->andWhere('s.organisateur.pseudo = :pseudo');
-                $qb->setParameter('pseudo', $user);
+            if (isset($_GET["checkbox_orga"])) {
+                $user = $this->getUser();
+                $qb->andWhere('s.organisateur = :user');
+                $qb->setParameter('user', $user);
+            }
+
+
+            //LA JOINTURE ENTRE LES TABLES SORTIE ET PARTICIPANT DECLENCHE UNE ERREUR
+            //UNDEFINED ARRAY KEY "NAME"
+/*            if (isset($_GET["checkbox_inscrit"])){
+                $user = $this->getUser();
+
+               $qb2 = $sortieRepository->createQueryBuilder('s');
+                $qb2
+                    ->leftJoin('s.participants', 'part')
+                    ->addSelect('part');
+
+                dd($qb2->getQuery()->getResult());
+
+                $qb->andWhere(':user MEMBER OF s.participants');
+                $qb->setParameter('user', $user);
             }*/
 
-/*            if ($_GET["checkbox_inscrit"]){
-                $user = $this->getUser()->getPseudo();
-                $qb->andWhere('s.organisateur.pseudo = :pseudo');
-                $qb->setParameter('pseudo', $user);
-            }*/
+
+            if (isset($_GET["checkbox_old"])) {
+                $qb->andWhere('s.dateLimiteInscription < :date');
+                $qb->setParameter('date', $dateDuJour);
+            }
 
             $sorties = $qb->getQuery()->getResult();
 
