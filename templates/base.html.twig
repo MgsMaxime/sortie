@@ -1,18 +1,53 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-    </head>
-    <body>
-    <div class="container">
-        <header>
-            {% include 'BodyStructure/navBar.html.twig' %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
 
-        </header>
-        {% block body %} Body par défaut {% endblock %}
-    </div>
-    </body>
+    {# lien pour normaliser style sur tous les navigateurs #}
+    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
 
+    {# lien vers page de style css #}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    {# liens pour polices google #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,100&display=swap" rel="stylesheet">
+
+    {# afficher favicon dans onglet de la page #}
+    <link rel="icon" href="{{ asset ('img/bde.png') }}">
+
+    <title>{% block title %}Sortie BDE{% endblock %}</title>
+</head>
+
+<body>
+{# balise style css spécifique override dans la page details #}
+{% block styleCss %} {% endblock %}
+<div class="container">
+    <header>
+        {# afficher image cliquable en haut du site + h1 pour le référencement #}
+        <h1>
+            <a href="{{ path('sortie_accueil') }}">
+                <img src="{{ asset('img/logoEniBDE.png') }}" alt="Sorties | Accueil">
+            <h2>Sortir !</h2>
+            </a>
+        </h1>
+
+        {# inclure menu de navigation de la page nav.html.twig #}
+        {% include 'bodyStructure/navBar.html.twig' %}
+    </header>
+    <main>
+        {# afficher messages flash stockés #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% block body %}Body par défaut{% endblock %}
+    </main>
+</div>
+</body>
 
 </html>
