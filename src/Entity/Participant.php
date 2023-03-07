@@ -43,6 +43,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, unique: true)]
     private ?string $mail = null;
 
+
     #[ORM\Column(nullable: true)]
     private ?bool $actif = null;
 
@@ -231,5 +232,13 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function removeSortie(Sortie $param)
+    {
+    }
+
+    public function addSortie(Sortie $param)
+    {
     }
 }

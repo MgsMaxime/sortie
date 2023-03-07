@@ -1,0 +1,23 @@
+<nav>
+    <ul>
+        {% if is_granted("ROLE_USER") %}
+            <a href="{{ path('sortie_accueil') }}">
+                <li>Accueil</li>
+            </a>
+            <a href="{{ path('participant_Mon_profil') }}">
+                <li>Mon profil</li>
+            </a>
+            <a href="{{ path('app_logout') }}">
+                <li>se déconnecter</li>
+            </a>
+            {% if is_granted("ROLE_ADMIN") %}
+                <a href="">
+                    <li>Villes</li>
+                </a>
+                <a href="">
+                    <li>Campus</li>
+                </a>
+            {% endif %}
+        {% endif %}
+    </ul>
+</nav>
