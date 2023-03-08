@@ -3,18 +3,44 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<h1>Mon profil</h1>
 
-    {{ form_start(registrationForm) }}
+{{ form_start(registrationForm) }}
         {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.mail) }}
-        {{ form_row(registrationForm.nom) }}
         {{ form_row(registrationForm.prenom) }}
+        {{ form_row(registrationForm.nom) }}
         {{ form_row(registrationForm.telephone) }}
+        {{ form_row(registrationForm.mail) }}
         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+            label: 'Mot de passe'
         }) }}
+    {# TODO faire répéter le mot de passe
+    {{ form_row(registrationForm.plainPassword, {
+        label: 'Confirmation'
+    }) }}
+    #}
 
-        <button type="submit" class="btn">Register</button>
+<label for="select_campus">Campus</label>
+<select name="select_campus" id="select_campus">
+    <option value="tousLesCampus">Tous les campus</option>
+    {% for campus in campus %}
+        <option value="{{ campus.nom }}">{{ campus.nom | capitalize }}</option>
+    {% endfor %}
+
+    {# TODO permettre téléchargement photo de profil  (itération 2) #}
+    <img src="" alt="Ma photo : ">
+    <button>Télécharger vers le serveur</button>
+    <br>
+
+
+    {# si user loggé, afficher bouton modifier et pas bouton enr #}
+
+    <button type="submit" class="btn">S'enregistrer</button>
     {{ form_end(registrationForm) }}
+
+
+    <button type="submit" class="btn">Modifier</button>
+    {{ form_end(registrationForm) }}
+
+
 {% endblock %}

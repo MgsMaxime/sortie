@@ -2,6 +2,7 @@ body {
     background: linear-gradient(#000000, #132135) fixed center center;
     background-size: cover;
     color: #EEE;
+    margin: 2%;
 }
 
 .flex_div{
