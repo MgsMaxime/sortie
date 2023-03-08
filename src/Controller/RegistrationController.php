@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
 use App\Entity\Participant;
 use App\Form\RegistrationFormType;
+use App\Repository\CampusRepository;
 use App\Security\ParticipantAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,9 +19,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, ParticipantAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        UserAuthenticatorInterface $userAuthenticator,
+        ParticipantAuthenticator $authenticator,
+        EntityManagerInterface $entityManager,
+        CampusRepository $campusRepository
+    ): Response
     {
         $user = new Participant();
+        $campus = $campusRepository->findAll();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -43,10 +53,13 @@ class RegistrationController extends AbstractController
                 $authenticator,
                 $request
             );
+        } else {
+            //TODO message erreur
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'campus' => $campus
         ]);
     }
 }

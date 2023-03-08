@@ -41,6 +41,9 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('campus')
+            // TODO : ajouter photo de profil (itération 2)
+            //->add('photoDeProfil')
         ;
     }
 
