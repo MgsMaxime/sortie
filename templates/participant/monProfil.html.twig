@@ -1,10 +1,28 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Mon profil
+{% endblock %}
+
 {% block body %}
 
+    <h2>{{ user.userIdentifier }}</h2>
+
+    {# TODO récupérer img téléchargée (itération 2) #}
+    <img src="" alt="Photo de profil">
+
+    <div>Prénom : {{ user.prenom }}</div>
+    <div>Nom : {{ user.nom }}</div>
+    <div>Téléphone : {{ user.telephone }}</div>
+    <div>Mail : {{ user.mail }}</div>
+
+    {# TODO récupérer le campus #}
+     <div>Campus : {{ user.campus }}</div>
+
+    <br>
+    <a href="{{ path('sortie_accueil') }}"><button>RETOUR</button></a>
+
 {% endblock %}
 
-{% block title %}
 
-{% endblock %}
 
