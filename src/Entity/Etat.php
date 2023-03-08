@@ -15,7 +15,7 @@ class Etat
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    #[Assert\Choice(["En création", "Ouverte", "Clôturée", "Activitée en cours","Activitée Terminée", "Annulée", "Activitée historisée"])]
+    #[Assert\Choice(["En création", "Ouverte", "Clôturée", "Activité en cours","Activité Terminée", "Annulée", "Activité historisée"])]
     #[ORM\Column(length: 50)]
     private ?string $libelle = null;
 

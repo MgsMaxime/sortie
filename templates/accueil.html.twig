@@ -1,15 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-<div class="infos_user">
-    <div class="date_jour">
-        <h3>Date du jour : {{ dateDuJour | date ('d-m-Y') }}</h3>
+    <div class="infos_user">
+        <div class="date_jour">
+            <h3>Date du jour : {{ dateDuJour | date ('d-m-Y') }}</h3>
+        </div>
+        <div class="user">
+            <h3>Participant : {{ participant.userIdentifier }}</h3>
+        </div>
     </div>
-    <div class="user">
-        <h3>Participant : {{ participant.userIdentifier }}</h3>
-    </div>
-</div>
     <form action="{{ path('sortie_accueil') }}" method="get">
     <div class="filtres">
         <h4>Filtrer les sorties</h4>
