@@ -123,10 +123,11 @@ class SortieController extends AbstractController
         return $this->render('sortie/afficher.html.twig');
     }
 
-    #[Route('/modifier', name: 'modifier')]
-    public function modifier(SortieRepository $sortieRepository, Request $request): Response
+    #[Route('/modifier/{id}', name: 'modifier', requirements: ['id'=>'\d+'])]
+    public function modifier(int $id,SortieRepository $sortieRepository, Request $request): Response
     {
         $sortie = new  Sortie();
+        $sortie = $sortieRepository->find($id);
 
         //Création du formulaire modifier sortie
         $sortieForm = $this->createForm(ModifierSortieType::class, $sortie);
