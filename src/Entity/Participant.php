@@ -220,35 +220,27 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->sortiesOrganisees;
     }
 
-    public function addSortiesOrganisee(Sortie $sortiesOrganisee): self
+    public function addSortieOrganisee(Sortie $sortieOrganisee): self
     {
-        if (!$this->sortiesOrganisees->contains($sortiesOrganisee)) {
-            $this->sortiesOrganisees->add($sortiesOrganisee);
-            $sortiesOrganisee->setOrganisateur($this);
+        if (!$this->sortiesOrganisees->contains($sortieOrganisee)) {
+            $this->sortiesOrganisees->add($sortieOrganisee);
+            $sortieOrganisee->setOrganisateur($this);
         }
 
         return $this;
     }
 
-    public function removeSortiesOrganisee(Sortie $sortiesOrganisee): self
+    public function removeSortieOrganisee(Sortie $sortieOrganisee): self
     {
-        if ($this->sortiesOrganisees->removeElement($sortiesOrganisee)) {
+        if ($this->sortiesOrganisees->removeElement($sortieOrganisee)) {
             // set the owning side to null (unless already changed)
-            if ($sortiesOrganisee->getOrganisateur() === $this) {
-                $sortiesOrganisee->setOrganisateur(null);
+            if ($sortieOrganisee->getOrganisateur() === $this) {
+                $sortieOrganisee->setOrganisateur(null);
             }
         }
 
         return $this;
     }
-
-/*    public function removeSortie(Sortie $param)
-    {
-    }
-
-    public function addSortie(Sortie $param)
-    {
-    }*/
 
 /**
  * @return Collection<int, Sortie>
@@ -258,18 +250,18 @@ public function getSorties(): Collection
     return $this->sorties;
 }
 
-public function addSorty(Sortie $sorty): self
+public function addSortie(Sortie $sortie): self
 {
-    if (!$this->sorties->contains($sorty)) {
-        $this->sorties->add($sorty);
+    if (!$this->sorties->contains($sortie)) {
+        $this->sorties->add($sortie);
     }
 
     return $this;
 }
 
-public function removeSorty(Sortie $sorty): self
+public function removeSortie(Sortie $sortie): self
 {
-    $this->sorties->removeElement($sorty);
+    $this->sorties->removeElement($sortie);
 
     return $this;
 }
