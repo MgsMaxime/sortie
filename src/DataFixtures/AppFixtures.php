@@ -93,7 +93,7 @@ class AppFixtures extends Fixture
 
             $ville = new Ville();
 
-            $ville->setNom($this->faker->name);
+            $ville->setNom($this->faker->city);
             $ville->setCodePostal($this->faker->randomNumber(5));
 
             $manager->persist($ville);
