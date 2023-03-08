@@ -42,8 +42,9 @@ class SortieController extends AbstractController
                 //->addSelect('part')
             ;
 
-            /*if (!isset($_GET["tousLesCampus"])){
-                $qb->andWhere("s.siteOrganisateur = getValue()");
+/*            if (!isset($_GET["tousLesCampus"])){
+                $campus = $_GET["select_campus"];
+                $qb->andWhere("s.siteOrganisateur = $campus");
             }*/
 
             if (isset($_GET["checkbox_orga"])) {

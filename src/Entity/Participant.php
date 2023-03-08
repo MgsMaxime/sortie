@@ -43,18 +43,24 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, unique: true)]
     private ?string $mail = null;
 
-    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
-    private Collection $sorties;
-
     #[ORM\Column(nullable: true)]
     private ?bool $actif = null;
 
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class)]
     private Collection $sortiesOrganisees;
 
+    #[ORM\ManyToMany(targetEntity: Sortie::class, inversedBy: 'participants')]
+    private Collection $sorties;
+
+    #[ORM\ManyToOne(inversedBy: 'participant')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Campus $campus = null;
+
+
     public function __construct()
     {
         $this->sortiesOrganisees = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -236,27 +242,51 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeSortie(Sortie $param)
+/*    public function removeSortie(Sortie $param)
     {
     }
 
     public function addSortie(Sortie $param)
     {
+    }*/
+
+/**
+ * @return Collection<int, Sortie>
+ */
+public function getSorties(): Collection
+{
+    return $this->sorties;
+}
+
+public function addSorty(Sortie $sorty): self
+{
+    if (!$this->sorties->contains($sorty)) {
+        $this->sorties->add($sorty);
     }
 
-    /**
-     * @return Collection
-     */
-    public function getSorties(): Collection
-    {
-        return $this->sorties;
-    }
+    return $this;
+}
 
-    /**
-     * @param Collection $sorties
-     */
-    public function setSorties(Collection $sorties): void
-    {
-        $this->sorties = $sorties;
-    }
+public function removeSorty(Sortie $sorty): self
+{
+    $this->sorties->removeElement($sorty);
+
+    return $this;
+}
+
+public function getCampus(): ?Campus
+{
+    return $this->campus;
+}
+
+public function setCampus(?Campus $campus): self
+{
+    $this->campus = $campus;
+
+    return $this;
+}
+
+
+
+
 }
