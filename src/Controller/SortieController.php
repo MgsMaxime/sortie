@@ -37,9 +37,9 @@ class SortieController extends AbstractController
                 ->leftJoin('s.etat', 'etat')
                 ->addSelect('etat')
                 ->leftJoin('s.organisateur', 'orga')
-                ->leftJoin('s.participants', 'part')
+                //->leftJoin('s.participants', 'part')
                 ->addSelect('orga')
-                ->addSelect('part')
+                //->addSelect('part')
             ;
 
             /*if (!isset($_GET["tousLesCampus"])){
@@ -124,7 +124,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/modifier', name: 'modifier')]
-    public function modifier(SortieRepository $sortieRepository, Request $request)
+    public function modifier(SortieRepository $sortieRepository, Request $request): Response
     {
         $sortie = new  Sortie();
 
@@ -136,16 +136,17 @@ class SortieController extends AbstractController
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
-            //sauvegarde en BDD la création de l'event
+            //sauvegarde en BDD la modification de l'event
             $sortieRepository->save($sortie, true);;
 
-            $this->addFlash("success","Sortie Ajoué !");
+            $this->addFlash("success","Sortie Modifiée !");
 
             //redirige vers la page accueil
             return $this->redirectToRoute('sortie_afficher') ;
         }
 
         return $this->render('sortie/modifier.html.twig', [
+            'sortie'=>$sortie,
             'ModfierSortie'=> $sortieForm->createView()
         ]);
     }

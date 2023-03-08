@@ -21,8 +21,8 @@ class Sortie
     #[Assert\Length(
         min: 2,
         max: 50,
-        minMessage: "Minimum de {{ limit }} caractéres s'il vous plaîts",
-        maxMessage: "Maximum de {{ limit }} caractéres s'il vous plaîts"
+        minMessage: "Minimum de {{ limit }} caractères s'il vous plait",
+        maxMessage: "Maximum de {{ limit }} caractères s'il vous plait"
     )]
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
@@ -44,7 +44,7 @@ class Sortie
     private ?int $nbInscriptionsMax = null;
     #[Assert\Length(
         max: 3000,
-        maxMessage: "Maximum {{ limit }} caractères s'il vous plaîts"
+        maxMessage: "Maximum {{ limit }} caractères s'il vous plait"
     )]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $infosSortie = null;
