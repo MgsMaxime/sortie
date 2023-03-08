@@ -22,7 +22,6 @@ class SortieController extends AbstractController
     {
         $campus = $campusRepository->findAll();
         $dateDuJour = new \DateTime('now');
-        //$fixtures->load($manager);
 
         $sorties =[];
 
@@ -36,9 +35,9 @@ class SortieController extends AbstractController
                 ->leftJoin('s.etat', 'etat')
                 ->addSelect('etat')
                 ->leftJoin('s.organisateur', 'orga')
-                //->leftJoin('s.participants', 'part')
+                ->leftJoin('s.participants', 'part')
                 ->addSelect('orga')
-                //->addSelect('part')
+                ->addSelect('part')
             ;
 
 /*            if (!isset($_GET["tousLesCampus"])){
@@ -52,22 +51,12 @@ class SortieController extends AbstractController
                 $qb->setParameter('user', $user);
             }
 
-
-            //LA JOINTURE ENTRE LES TABLES SORTIE ET PARTICIPANT DECLENCHE UNE ERREUR
-            //UNDEFINED ARRAY KEY "NAME"
-/*            if (isset($_GET["checkbox_inscrit"])){
+            if (isset($_GET["checkbox_inscrit"])){
                 $user = $this->getUser();
-
-               $qb2 = $sortieRepository->createQueryBuilder('s');
-                $qb2
-                    ->leftJoin('s.participants', 'part')
-                    ->addSelect('part');
-
-                dd($qb2->getQuery()->getResult());
 
                 $qb->andWhere(':user MEMBER OF s.participants');
                 $qb->setParameter('user', $user);
-            }*/
+            }
 
 
             if (isset($_GET["checkbox_old"])) {
