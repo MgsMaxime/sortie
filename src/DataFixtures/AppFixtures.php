@@ -38,7 +38,7 @@ class AppFixtures extends Fixture
 
             $sortie = new Sortie();
 
-/*            $participant->setNom($faker->name);
+/*          $participant->setNom($faker->name);
             $participant->setPrenom($faker->name);
             $participant->setMail($faker->email);
             $participant->setTelephone($faker->phoneNumber);

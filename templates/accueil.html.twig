@@ -18,7 +18,7 @@
             <select name="select_campus" id="select_campus">
                 <option value="tousLesCampus">Tous les campus</option>
                 {% for campus in campus %}
-                    <option value="{{ campus.nom }}">{{ campus.nom | capitalize }}</option>
+                    <option name="{{ campus.nom }}">{{ campus.nom | capitalize }}</option>
                 {% endfor %}
             </select>
             <label for="search">Le nom de la sortie contient : </label>
