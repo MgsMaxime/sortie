@@ -16,7 +16,7 @@ class SecurityController extends AbstractController
          if ($this->getUser()) {
              //return $this->redirectToRoute('accueil');
              $participant = $this->getUser();
-             return $this->render('accueil.html.twig',['participant' => $participant]);
+             return $this->redirectToRoute('sortie_accueil',['participant' => $participant]);
          }
 
         // get the login error if there is one

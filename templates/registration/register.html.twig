@@ -20,12 +20,6 @@
     }) }}
     #}
 
-<label for="select_campus">Campus</label>
-<select name="select_campus" id="select_campus">
-    <option value="tousLesCampus">Tous les campus</option>
-    {% for campus in campus %}
-        <option value="{{ campus.nom }}">{{ campus.nom | capitalize }}</option>
-    {% endfor %}
 
     {# TODO permettre téléchargement photo de profil  (itération 2) #}
     <img src="" alt="Ma photo : ">
