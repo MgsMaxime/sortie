@@ -10,7 +10,7 @@
             <a href="{{ path('app_logout') }}">
                 <li>se déconnecter</li>
             </a>
-        <a href="{{ path('sortie_modifier') }}">
+        <a href="{{ path('sortie_modifier', {'id': '9'}) }}">
                 <li>Modification</li>
             </a>{% if is_granted("ROLE_ADMIN") %}
             <a href="">
