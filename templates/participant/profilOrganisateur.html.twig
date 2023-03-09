@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Profil de l'organisateur
+{% endblock %}
+
+{% block body %}
+
+    <h2>{{ app.user.userIdentifier }}</h2>
+
+    {# TODO : récupérer img téléchargée (fin itération 1) #}
+    <img src="" alt="Photo de profil">
+
+    <div>Prénom : {{ app.user.prenom }}</div>
+    <div>Nom : {{ app.user.nom }}</div>
+    <div>Téléphone : {{ app.user.telephone }}</div>
+    <div>Mail : {{ app.user.mail }}</div>
+    <div>Campus : {{ app.user.campus.nom }}</div>
+    <br>
+
+{% endblock %}
+
+
+

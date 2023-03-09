@@ -3,19 +3,22 @@
 namespace App\Model;
 
 use App\Entity\Campus;
-use phpDocumentor\Reflection\Types\Boolean;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class FiltresAccueil
 
 {
-private Campus $campus;
-private ?string $recherche;
-private ?\DateTimeInterface $dateDebut;
-private ?\DateTimeInterface $dateFin;
-private Boolean $checkOrga;
-private Boolean $checkInscrit;
-private Boolean $checkNonInscrit;
-private Boolean $checkPassees;
+    #[Assert\Type(Campus::class)]
+    private ?Campus $campus;
+    #[Assert\Type('string')]
+    #[Assert\Length(min: 1, max: 50)]
+    private ?string $recherche= null;
+    private ?\DateTimeInterface $dateDebut= null;
+    private ?\DateTimeInterface $dateFin= null;
+    private ?bool $checkOrga= null;
+    private ?bool $checkInscrit= null;
+    private ?bool $checkNonInscrit= null;
+    private ?bool $checkPassees= null;
 
     public function __construct()
     {

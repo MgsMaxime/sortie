@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Campus;
 use App\Entity\Participant;
 use App\Form\RegistrationFormType;
 use App\Repository\CampusRepository;
@@ -34,13 +33,16 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            // si password + confirmation non null
+            if ($form->get('plainPassword')->getData() !== null) {
+                // encoder le plain password
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+            }
 
             $user->setRoles(['ROLE_USER']);
 
@@ -53,8 +55,6 @@ class RegistrationController extends AbstractController
                 $authenticator,
                 $request
             );
-        } else {
-            //TODO message erreur
         }
 
         return $this->render('registration/register.html.twig', [

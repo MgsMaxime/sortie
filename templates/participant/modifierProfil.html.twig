@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mon profil
+{% endblock %}
+
+{% block body %}
+    <h2>Mon profil</h2>
+
+    <div>
+        {{ form_start(participantForm) }}
+
+        {{ form_row(participantForm.pseudo) }}
+        {{ form_row(participantForm.nom) }}
+        {{ form_row(participantForm.prenom) }}
+        {{ form_row(participantForm.telephone) }}
+        {{ form_row(participantForm.mail) }}
+        {{ form_row(participantForm.password) }}
+        {{ form_row(participantForm.campus) }}
+
+        <a href="{{ path('participant_modifier', {'id': app.user.id}) }}"><button>Enregistrer</button></a>
+        <a href="{{ path('main_accueil') }}"><button type="button">Annuler</button></a>
+
+        {{  form_end(participantForm) }}
+    </div>
+
+{% endblock %}
+

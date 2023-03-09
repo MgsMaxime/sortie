@@ -15,8 +15,7 @@ class SecurityController extends AbstractController
         // si user déjà loggé, le redirige vers accueil
          if ($this->getUser()) {
              //return $this->redirectToRoute('accueil');
-             $participant = $this->getUser();
-             return $this->redirectToRoute('sortie_accueil',['participant' => $participant]);
+             return $this->redirectToRoute('main_accueil');
          }
 
         // get the login error if there is one
@@ -24,7 +23,11 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        // TODO message erreur
+        // $this->addFlash('error', 'Identifiants incorrects !');
+
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error
+        ]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

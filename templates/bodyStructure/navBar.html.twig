@@ -1,13 +1,10 @@
 <nav>
     <ul>
         {% if is_granted("ROLE_USER") %}
-            <a href="{{ path('sortie_accueil') }}">
+            <a href="{{ path('main_accueil') }}">
                 <li>Accueil</li>
             </a>
-            <a href="{{ path('sortie_creation') }}">
-                <li>creation</li>
-            </a>
-            <a href="{{ path('participant_Mon_profil') }}">
+            <a href="{{ path('participant_modifier', {'id': app.user.id}) }}">
                 <li>Mon profil</li>
             </a>
             <a href="{{ path('app_logout') }}">

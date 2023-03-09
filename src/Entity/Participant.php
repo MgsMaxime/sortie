@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
 #[UniqueEntity(fields: ['pseudo'], message: 'There is already an account with this pseudo')]
@@ -31,15 +32,26 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Assert\NotBlank(message: "Le nom est obligatoire")]
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
 
+    #[Assert\NotBlank(message: "Le prénom est obligatoire")]
     #[ORM\Column(length: 50)]
     private ?string $prenom = null;
 
+    #[Assert\NotBlank(message: "Le téléphone est obligatoire")]
+// TODO :   #[Assert\]
+    #[Assert\Length(
+        min:10,
+        minMessage:"Minimum {{ limit }} characters please"
+    )]
     #[ORM\Column(length: 20)]
     private ?string $telephone = null;
 
+    #[Assert\NotBlank(message: "L'email est obligatoire")]
+    // TODO : a tester
+    #[Assert\Regex('#[a-zA-Z]+([\.\-][a-zA-Z]+)?\.[a-zA-Z]{2,4}$#')]
     #[ORM\Column(length: 255, unique: true)]
     private ?string $mail = null;
 
@@ -51,6 +63,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToMany(targetEntity: Sortie::class, inversedBy: 'participants')]
     private Collection $sorties;
+
 
     #[ORM\ManyToOne(inversedBy: 'participant')]
     #[ORM\JoinColumn(nullable: false)]
