@@ -3,7 +3,7 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-<h1>Mon profil</h1>
+<h1>S'enregistrer</h1>
 
 {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.pseudo) }}
@@ -14,33 +14,19 @@
         {{ form_row(registrationForm.plainPassword, {
             label: 'Mot de passe'
         }) }}
-    {# TODO faire répéter le mot de passe
-    {{ form_row(registrationForm.plainPassword, {
-        label: 'Confirmation'
-    }) }}
-    #}
+        {{ form_row(registrationForm.campus) }}
 
-<label for="select_campus">Campus</label>
-<select name="select_campus" id="select_campus">
-    <option value="tousLesCampus">Tous les campus</option>
-    {% for campus in campus %}
-        <option value="{{ campus.nom }}">{{ campus.nom | capitalize }}</option>
-    {% endfor %}
-
-    {# TODO permettre téléchargement photo de profil  (itération 2) #}
+    {# TODO permettre téléchargement photo de profil  (fin itération 1) #}
     <img src="" alt="Ma photo : ">
     <button>Télécharger vers le serveur</button>
     <br>
 
 
-    {# si user loggé, afficher bouton modifier et pas bouton enr #}
-
+    {# TODO Rendre ce bouton accessible qu'aux admin #}
+    {# {% if is_granted("ROLE_ADMIN") %} #}
     <button type="submit" class="btn">S'enregistrer</button>
+    {# {% endif %}#}
+
     {{ form_end(registrationForm) }}
-
-
-    <button type="submit" class="btn">Modifier</button>
-    {{ form_end(registrationForm) }}
-
 
 {% endblock %}

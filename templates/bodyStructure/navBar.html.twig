@@ -4,7 +4,8 @@
             <a href="{{ path('sortie_accueil') }}">
                 <li>Accueil</li>
             </a>
-            <a href="{{ path('participant_Mon_profil') }}">
+            {# TODO : modifier id #}
+            <a href="{{ path('participant_modifier', {'id': app.user.id}) }}">
                 <li>Mon profil</li>
             </a>
             <a href="{{ path('app_logout') }}">

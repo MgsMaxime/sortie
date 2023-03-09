@@ -11,21 +11,19 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RegistrationFormType extends AbstractType
+class ParticipantType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $campus = new Campus();
         $builder
+            // TODO rajouter photo
             ->add('pseudo', TextType::class)
-            ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
-            ->add('mail', TextType::class)
+            ->add('nom', TextType::class)
             ->add('telephone', TextType::class)
-            ->add('plainPassword', RepeatedType::class, [
+            ->add('mail', TextType::class)
+            ->add('password', RepeatedType::class,[
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'invalid_message' => 'confirmation incorrecte',
@@ -36,10 +34,7 @@ class RegistrationFormType extends AbstractType
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'nom'
-            ])
-            // TODO : ajouter photo de profil (fin itération 1)
-            //->add('photoDeProfil')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

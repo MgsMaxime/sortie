@@ -5,6 +5,8 @@
 {% block body %}
 <form method="post">
     {% if error %}
+        {# TODO: popup alert identifiants incorrects #}
+
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
