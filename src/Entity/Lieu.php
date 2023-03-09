@@ -16,10 +16,10 @@ class Lieu
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    #[Assert\NotBlank(message: "Nous avons besoins du nom du lieu de l'événement")]
+    #[Assert\NotBlank(message: "Nous avons besoin du nom du lieu de l'événement")]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
-    #[Assert\NotBlank(message: "Nous avons besoins d'une rue")]
+    #[Assert\NotBlank(message: "Nous avons besoin d'une rue")]
     #[ORM\Column(length: 255)]
     private ?string $rue = null;
 
@@ -28,7 +28,7 @@ class Lieu
 
     #[ORM\Column(nullable: true)]
     private ?float $longitude = null;
-    #[Assert\NotBlank(message: "Nous avons besoins d'une ville")]
+    #[Assert\NotBlank(message: "Nous avons besoin d'une ville")]
     #[ORM\ManyToOne(inversedBy: 'lieux')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Ville $ville = null;
@@ -114,25 +114,23 @@ class Lieu
         return $this->sorties;
     }
 
-    public function addSorty(Sortie $sorty): self
+    public function addSortie(Sortie $sortie): self
     {
-        if (!$this->sorties->contains($sorty)) {
-            $this->sorties->add($sorty);
-            $sorty->setLieu($this);
+        if (!$this->sorties->contains($sortie)) {
+            $this->sorties->add($sortie);
+            $sortie->setLieu($this);
         }
-
         return $this;
     }
 
-    public function removeSorty(Sortie $sorty): self
+    public function removeSortie(Sortie $sortie): self
     {
-        if ($this->sorties->removeElement($sorty)) {
+        if ($this->sorties->removeElement($sortie)) {
             // set the owning side to null (unless already changed)
-            if ($sorty->getLieu() === $this) {
-                $sorty->setLieu(null);
+            if ($sortie->getLieu() === $this) {
+                $sortie->setLieu(null);
             }
         }
-
         return $this;
     }
 }

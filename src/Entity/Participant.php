@@ -41,6 +41,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[Assert\NotBlank(message: "Le téléphone est obligatoire")]
+// TODO :   #[Assert\]
     #[Assert\Length(
         min:10,
         minMessage:"Minimum {{ limit }} characters please"
@@ -48,7 +49,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 20)]
     private ?string $telephone = null;
 
-    #[Assert\NotBlank(message: "L'email' est obligatoire")]
+    #[Assert\NotBlank(message: "L'email est obligatoire")]
     // TODO : a tester
     #[Assert\Regex('#[a-zA-Z]+([\.\-][a-zA-Z]+)?\.[a-zA-Z]{2,4}$#')]
     #[ORM\Column(length: 255, unique: true)]

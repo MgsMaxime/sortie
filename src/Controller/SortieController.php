@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Sortie;
 use App\Form\ModifierSortieType;
 use App\Form\SortieType;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,12 +84,12 @@ class SortieController extends AbstractController
             $this->addFlash("success","Sortie Modifiée !");
 
             //redirige vers la page accueil
-            return $this->redirectToRoute('sortie_accueil') ;
+            return $this->redirectToRoute('main_accueil') ;
         }
 
         return $this->render('sortie/modifier.html.twig', [
             'sortie'=>$sortie,
-            'ModfierSortie'=> $sortieForm->createView()
+            'ModifierSortie'=> $sortieForm->createView()
         ]);
     }
 
