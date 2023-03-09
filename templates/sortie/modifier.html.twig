@@ -1,10 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {# début du form #}
+    {{ form_start(ModfierSortie) }}
 
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(ModfierSortie.nom) }}
+        {{ form_widget(ModfierSortie.nom) }}
+        {{ form_errors(ModfierSortie.nom) }}
+    </div>
+
+    {# affichage du reste du form #}
+    {{ form_rest(ModfierSortie) }}
+
+    <a href="{{ path('sortie_accueil') }}"><button>Enregistrer</button></a>
+    <a href="{{ path('sortie_accueil') }}"><button>Publier la sortie</button></a>
+    <a href="{{ path('sortie_accueil') }}"><button>Supprimer la sortie</button></a>
+    <a href="{{ path('sortie_accueil') }}"><button>Annuler</button></a>
+    {# fin du formulaire #}
+    {{ form_end(ModfierSortie) }}
 {% endblock %}
 
 {% block title %}
-
+    {{ parent() }} | modifier sortie !
 {% endblock %}
 

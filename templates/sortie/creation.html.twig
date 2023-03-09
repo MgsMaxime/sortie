@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 {% form_theme sortieForm 'formTheme/formTheme.html.twig' %}
 
-{% block title %}
-    Ma sortie
-{% endblock %}
+
+    {% block title %}
+        {{ parent() }} |Creation d'un événement !
+    {% endblock %}
 
 {% block body %}
     {# début du form #}
@@ -19,9 +20,9 @@
     {# affichage du reste du form #}
     {{ form_rest(sortieForm) }}
 
-    <button>Enregistrer</button>
-    <button>Publier</button>
-    <button>Annuler</button>
+    <a href="{{ path('sortie_accueil') }}"><button>Enregistrer</button></a>
+    <a href="{{ path('sortie_accueil') }}"><button>Publier la sortie</button></a>
+    <a href="{{ path('sortie_accueil') }}"><button>Annuler</button></a>
     {# fin du formulaire #}
     {{ form_end(sortieForm) }}
 {% endblock %}

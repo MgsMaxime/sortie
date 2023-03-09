@@ -17,15 +17,19 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     private $managerRegistry;
     private $faker;
 
-    public function __construct(ManagerRegistry $managerRegistry)
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $userPasswordHasher,ManagerRegistry $managerRegistry)
     {
         $this->managerRegistry = $managerRegistry;
+        $this->passwordHasher = $userPasswordHasher;
         $this->faker = Factory::create('fr FR');
     }
 
@@ -35,7 +39,7 @@ class AppFixtures extends Fixture
         $this->addVille($manager);
         $this->addLieu($manager);
         $this->addCampus($manager);
-        $this->addParticipant($manager);
+        $this->addParticipant($this->passwordHasher,$manager);
         $this->addSorties($manager);
     }
 
@@ -58,8 +62,8 @@ class AppFixtures extends Fixture
         $sortie->setNom($this->faker->name);
         $sortie->setInfosSortie($this->faker->name);
         $sortie->setDuree($this->faker->randomNumber());
-        $sortie->setDateHeureDebut(new \DateTime());
-        $sortie->setDateLimiteInscription(new \DateTime('+1month'));
+        $sortie->setDateHeureDebut($this->faker->dateTimeBetween('-2years', 'now'));
+        $sortie->setDateLimiteInscription($sortie->getDateHeureDebut());
         $sortie->setEtat($this->faker->randomElement($etats));
         $sortie->setLieu($this->faker->randomElement($lieux));
         $sortie->setNbInscriptionsMax($this->faker->randomNumber());
@@ -93,7 +97,7 @@ class AppFixtures extends Fixture
 
             $ville = new Ville();
 
-            $ville->setNom($this->faker->name);
+            $ville->setNom($this->faker->city);
             $ville->setCodePostal($this->faker->randomNumber(5));
 
             $manager->persist($ville);
@@ -135,10 +139,23 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
-    private function addParticipant(ObjectManager $manager)
+    private function addParticipant(UserPasswordHasherInterface $passwordHasher, ObjectManager $manager)
     {
         $campusrepo = new CampusRepository($this->managerRegistry);
         $campus = $campusrepo->findAll();
+
+        $participant = new Participant();
+        $participant->setNom("Admin");
+        $participant->setPrenom("Admin");
+        $participant->setMail("admin@gmail.com");
+        $participant->setTelephone(00000000);
+        $participant->setPassword($passwordHasher->hashPassword($participant, "AdminMDP"));
+        $participant->setPseudo("Admin");
+        $participant->setRoles(['ROLE_ADMIN']);
+        $participant->setActif(true);
+        $participant->setCampus($this->faker->randomElement($campus));
+
+        $manager->persist($participant);
 
         for ($i=0; $i<100; $i++){
 

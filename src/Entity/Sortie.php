@@ -21,18 +21,18 @@ class Sortie
     #[Assert\Length(
         min: 2,
         max: 50,
-        minMessage: "Minimum de {{ limit }} caractéres s'il vous plaîts",
-        maxMessage: "Maximum de {{ limit }} caractéres s'il vous plaîts"
+        minMessage: "Minimum de {{ limit }} caractères s'il vous plait",
+        maxMessage: "Maximum de {{ limit }} caractères s'il vous plait"
     )]
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
-    #[Assert\NotBlank(message: "Nous avons besoins d'une date de début")]
+    #[Assert\NotBlank(message: "Nous avons besoin d'une date de début")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column]
     private ?int $duree = null;
-    #[Assert\NotBlank(message: "Nous avons besoins d'une date")]
+    #[Assert\NotBlank(message: "Nous avons besoin d'une date")]
     #[Assert\LessThan(
         propertyPath: "dateHeureDebut",
         message: "Cette date doit être inférieure à la date de début"
@@ -44,7 +44,7 @@ class Sortie
     private ?int $nbInscriptionsMax = null;
     #[Assert\Length(
         max: 3000,
-        maxMessage: "Maximum {{ limit }} caractères s'il vous plaîts"
+        maxMessage: "Maximum {{ limit }} caractères s'il vous plait"
     )]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $infosSortie = null;
@@ -64,6 +64,8 @@ class Sortie
     #[ORM\ManyToOne(inversedBy: 'sortiesOrganisees')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Participant $organisateur = null;
+
+
 
     #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'sorties')]
     private Collection $participants;

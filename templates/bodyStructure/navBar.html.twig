@@ -1,7 +1,7 @@
 <nav>
     <ul>
         {% if is_granted("ROLE_USER") %}
-            <a href="{{ path('sortie_accueil') }}">
+            <a href="{{ path('main_accueil') }}">
                 <li>Accueil</li>
             </a>
             {# TODO : modifier id #}
@@ -11,14 +11,17 @@
             <a href="{{ path('app_logout') }}">
                 <li>se déconnecter</li>
             </a>
-            {% if is_granted("ROLE_ADMIN") %}
-                <a href="">
-                    <li>Villes</li>
-                </a>
-                <a href="">
-                    <li>Campus</li>
-                </a>
-            {% endif %}
+        <a href="{{ path('sortie_modifier', {'id': '9'}) }}">
+                <li>Modification</li>
+            </a>{% if is_granted("ROLE_ADMIN") %}
+            <a href="">
+                <li>Villes</li>
+            </a>
+            <a href="">
+                <li>Campus</li>
+            </a>
+        {% endif %}
+
         {% endif %}
     </ul>
 </nav>

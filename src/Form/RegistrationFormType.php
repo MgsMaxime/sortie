@@ -32,7 +32,7 @@ class RegistrationFormType extends AbstractType
                 'required' => false,
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmation'],
-                ])
+            ])
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'nom'

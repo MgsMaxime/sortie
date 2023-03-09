@@ -14,49 +14,43 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SortieType extends AbstractType
+class ModifierSortieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('nom', TextType::class)
             ->add('dateHeureDebut', DateType::class, [
-                'label' => 'Date et Heure de la sortie : ',
+                'label' => 'dateHeureDebut :',
                 'html5' => true,
                 'widget' => 'single_text'
+
             ])
             ->add('duree')
             ->add('dateLimiteInscription', DateType::class, [
-                'label' => "Date limite d'inscription : ",
+                'label' => 'Date limite inscription : ',
                 'html5' => true,
                 'widget' => 'single_text'
             ])
             ->add('nbInscriptionsMax')
             ->add('infosSortie')
             ->add('siteOrganisateur', EntityType::class, [
-                    'class' => Campus::class,
-                    'choice_label' => 'nom'
-                ]
-
-            )
+                'class' => Campus::class,
+                'choice_label' => 'nom'
+            ])
             ->add('organisateur', EntityType::class, [
                 'class' => Participant::class,
                 'choice_label' => 'nom'
             ])
-//            ->add('participants', EntityType::class, [
-//                'class' => Participant::class
-//            ])
+            //->add('participants')
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'nom'
             ])
-            ->add('etat', EntityType::class,
-                [
-                    'class' => Etat::class,
-                    'choice_label' => 'libelle'
-                ]
-
-            );
+            ->add('etat', EntityType::class, [
+                'class' => Etat::class,
+                'choice_label' => 'libelle'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
