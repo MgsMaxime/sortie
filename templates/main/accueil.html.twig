@@ -35,6 +35,7 @@
             <tbody>
 
                     {% for sortie in sorties %}
+                        {% if sortie.etat.libelle is not same as "Créee" %}
             <tr>
                 <td>{{ sortie.nom }}</td>
                 <td>{{ sortie.dateHeureDebut | date ('d/m/Y') }}</td>
@@ -42,18 +43,40 @@
             <td>/{{ sortie.nbInscriptionsMax }}</td>
             <td>{{ sortie.etat.libelle }}</td>
             <td>
-                            {% if sortie in app.user.sorties %}
-                            {{ X }}
-                            {% endif %}
+                 {% if sortie in app.user.sorties %}
+                 {{ X }}
+                 {% endif %}
             </td>
             <td>{{ sortie.organisateur.nom }}</td>
-            <td></td>
+            <td>
+                {% if sortie.etat.libelle is not same as "Activité en cours" %}
+                <a href="{{ path('sortie_afficher', {'id': sortie.id}) }}">Afficher</a>
+                {% endif %}
+                {% if sortie in app.user.sorties and sortie.etat.libelle is same as "Ouverte"%}
+                <a href=""> - Se désister</a>
+                {% endif %}
+                {% if sortie not in app.user.sorties and sortie.etat.libelle is same as "Ouverte"%}
+                    <a href=""> - S'inscrire</a>
+                {% endif %}
+                {% if sortie.organisateur is same as app.user and sortie.etat.libelle is same as "Activité en cours" %}
+                    <a href="">Modifier</a>
+                {% endif %}
+                {% if sortie.organisateur is same as app.user and sortie.etat.libelle is same as "Activité en cours" %}
+                    <a href=""> - Publier</a>
+                {% endif %}
+            </td>
             </tr>
+                        {% endif %}
                     {% endfor %}
 
             </tbody>
         </table>
+
     {% endif %}
+
+    <a href="{{ path('sortie_creation') }}">
+        <button>Créer une sortie
+        </button></a>
 {% endblock %}
 
 {% block title %}
