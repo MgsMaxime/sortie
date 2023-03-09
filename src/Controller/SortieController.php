@@ -20,6 +20,8 @@ class SortieController extends AbstractController
     public function creation(SortieRepository $sortieRepository, Request $request): Response
     {
         $sortie = new Sortie();
+        //Permet de récupérer le campus de l'user connecté dans le form créer une sortie
+        $sortie->setSiteOrganisateur($this->getUser()->getCampus());
 
         //Création d'une instance de form lié à une instance de sortie
         $sortieForm = $this->createForm(sortieType::class, $sortie);

@@ -1,18 +1,20 @@
 <nav>
+
+    {% if is_granted("ROLE_USER") %}
     <ul>
-        {% if is_granted("ROLE_USER") %}
-            <a href="{{ path('main_accueil') }}">
-                <li>Accueil</li>
-            </a>
-            <a href="{{ path('participant_modifier', {'id': app.user.id}) }}">
-                <li>Mon profil</li>
-            </a>
-            <a href="{{ path('app_logout') }}">
-                <li>Se déconnecter</li>
-            </a>
+        <a href="{{ path('main_accueil') }}">
+            <li>Accueil</li>
+        </a>
+        <a href="{{ path('participant_modifier', {'id': app.user.id}) }}">
+            <li>Mon profil</li>
+        </a>
+        <a href="{{ path('app_logout') }}">
+            <li>Se déconnecter</li>
+        </a>
         <a href="{{ path('sortie_modifier', {'id': '9'}) }}">
-                <li>Modification</li>
-            </a>{% if is_granted("ROLE_ADMIN") %}
+            <li>Modification</li>
+        </a>
+        {% if is_granted("ROLE_ADMIN") %}
             <a href="">
                 <li>Villes</li>
             </a>
