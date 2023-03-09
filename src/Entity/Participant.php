@@ -41,16 +41,15 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[Assert\NotBlank(message: "Le téléphone est obligatoire")]
-// TODO :   #[Assert\]
+    #[Assert\Type ("integer", "Le numéro de téléphone ne doit être composé que de chiffres")]
     #[Assert\Length(
         min:10,
-        minMessage:"Minimum {{ limit }} characters please"
+        minMessage:"Minimum {{ limit }} chiffres svp"
     )]
     #[ORM\Column(length: 20)]
     private ?string $telephone = null;
 
     #[Assert\NotBlank(message: "L'email est obligatoire")]
-    // TODO : a tester
     #[Assert\Regex('#[a-zA-Z]+([\.\-][a-zA-Z]+)?\.[a-zA-Z]{2,4}$#')]
     #[ORM\Column(length: 255, unique: true)]
     private ?string $mail = null;
@@ -65,7 +64,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $sorties;
 
 
-    #[ORM\ManyToOne(inversedBy: 'participant')]
+    #[ORM\ManyToOne(inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $campus = null;
 
