@@ -26,13 +26,13 @@ class Sortie
     )]
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
-    #[Assert\NotBlank(message: "Nous avons besoins d'une date de début")]
+    #[Assert\NotBlank(message: "Nous avons besoin d'une date de début")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column]
     private ?int $duree = null;
-    #[Assert\NotBlank(message: "Nous avons besoins d'une date")]
+    #[Assert\NotBlank(message: "Nous avons besoin d'une date")]
     #[Assert\LessThan(
         propertyPath: "dateHeureDebut",
         message: "Cette date doit être inférieure à la date de début"
