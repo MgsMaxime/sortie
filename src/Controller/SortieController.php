@@ -93,10 +93,21 @@ class SortieController extends AbstractController
         ]);
     }
 
-    #[Route('/supprimer', name: 'supprimer')]
-    public function supprimer()
+    #[Route('/supprimer/{id}', name: 'supprimer')]
+    public function supprimer(int $id, SortieRepository $sortieRepository)
     {
-        return $this->render('sortie/supprimer.html.twig');
+
+        //Récupération de la série
+        $sortie = $sortieRepository->find($id);
+
+        if ($sortie){
+            //je le supprime
+            $sortieRepository->remove($sortie, true);
+            $this->addFlash("Warning", "Sortie deleted !");
+        }else{
+            throw $this->createNotFoundException("This serie can't be deleted !");
+        }
+        return $this->redirectToRoute('main_accueil');
     }
     #[Route('/publier', name: 'publier')]
     public function publier()

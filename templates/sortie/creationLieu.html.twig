@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% form_theme lieuForm 'formTheme/formTheme.html.twig' %}
+
+
+    {% block title %}
+        {{ parent() }} |Ajout d'un nouveau Lieu !
+    {% endblock %}
+
+{% block body %}
+    {# début du form #}
+    {{ form_start(lieuForm) }}
+
+    <div class="creation-lieu">
+        {# découpage par champ #}
+        {{ form_label(lieuForm.nom) }}
+        {{ form_widget(lieuForm.nom) }}
+        {{ form_errors(lieuForm.nom) }}
+    </div>
+    <div class="creation-lieu">
+        {# découpage par champ #}
+        {{ form_label(lieuForm.rue) }}
+        {{ form_widget(lieuForm.rue) }}
+        {{ form_errors(lieuForm.rue) }}
+    </div>
+    <div class="creation-lieu">
+        {# découpage par champ #}
+        {{ form_label(lieuForm.ville) }}
+        {{ form_widget(lieuForm.ville) }}
+        {{ form_errors(lieuForm.ville) }}
+    </div>
+
+    <a href="{{ path('main_accueil') }}"><button>Enregistrer nouveau lieu</button></a>
+    <a href="{{ path('main_accueil') }}"><button type="button">Annuler</button></a>
+    {# affichage du reste du form #}
+    {{ form_rest(lieuForm) }}
+
+    {# fin du formulaire #}
+    {{ form_end(lieuForm) }}
+{% endblock %}
