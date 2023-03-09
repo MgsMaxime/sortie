@@ -14,27 +14,19 @@
         {{ form_row(registrationForm.plainPassword, {
             label: 'Mot de passe'
         }) }}
-    {# TODO faire répéter le mot de passe
-    {{ form_row(registrationForm.plainPassword, {
-        label: 'Confirmation'
-    }) }}
-    #}
+        {{ form_row(registrationForm.campus) }}
 
-
-    {# TODO permettre téléchargement photo de profil  (itération 2) #}
+    {# TODO permettre téléchargement photo de profil  (fin itération 1) #}
     <img src="" alt="Ma photo : ">
     <button>Télécharger vers le serveur</button>
     <br>
 
 
-    {# si user loggé, afficher bouton modifier et pas bouton enr #}
-
+    {# TODO Rendre ce bouton accessible qu'aux admin #}
+    {# {% if is_granted("ROLE_ADMIN") %} #}
     <button type="submit" class="btn">S'enregistrer</button>
+    {# {% endif %}#}
+
     {{ form_end(registrationForm) }}
-
-
-    <button type="submit" class="btn">Modifier</button>
-    {{ form_end(registrationForm) }}
-
 
 {% endblock %}

@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<Participant>
@@ -66,11 +67,6 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-
-
-
-
 
 //    /**
 //     * @return Participant[] Returns an array of Participant objects
