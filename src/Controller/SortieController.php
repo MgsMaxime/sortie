@@ -45,10 +45,22 @@ class SortieController extends AbstractController
         ]);
     }
 
-    #[Route('/afficher', name: 'afficher')]
-    public function afficher()
+    #[Route('/{id}', name: 'afficher', requirements: ['id' => '\d+'])]
+    public function afficher(int $id, SortieRepository $sortieRepository, ParticipantRepository $participantRepository): Response
     {
-        return $this->render('sortie/afficher.html.twig');
+        $sortie = $sortieRepository->find($id);
+        $participant = $participantRepository->find($id);
+
+
+        if(!$sortie && $participant){
+            throw $this->createNotFoundException("Oops ! Wish not found !");
+        }
+        dump($sortie );
+        dump($participant);
+        return $this->render('sortie/afficher.html.twig', [
+            'sortie'=> $sortie,
+            'participants'=>$participant
+        ]);
     }
 
     #[Route('/modifier/{id}', name: 'modifier', requirements: ['id'=>'\d+'])]
@@ -71,7 +83,7 @@ class SortieController extends AbstractController
             $this->addFlash("success","Sortie Modifiée !");
 
             //redirige vers la page accueil
-            return $this->redirectToRoute('sortie_afficher') ;
+            return $this->redirectToRoute('sortie_accueil') ;
         }
 
         return $this->render('sortie/modifier.html.twig', [

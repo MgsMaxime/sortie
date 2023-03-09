@@ -21,13 +21,13 @@ class SortieType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('dateHeureDebut', DateType::class, [
-                'label' => 'dateHeureDebut : ',
+                'label' => 'Date et Heure de la sortie : ',
                 'html5' => true,
                 'widget' => 'single_text'
             ])
             ->add('duree')
             ->add('dateLimiteInscription', DateType::class, [
-                'label' => 'Date limite inscription : ',
+                'label' => "Date limite d'inscription : ",
                 'html5' => true,
                 'widget' => 'single_text'
             ])

@@ -65,6 +65,8 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Participant $organisateur = null;
 
+
+
     #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'sorties')]
     private Collection $participants;
 
