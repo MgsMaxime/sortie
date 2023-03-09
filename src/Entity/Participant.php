@@ -43,14 +43,17 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: "Le téléphone est obligatoire")]
     #[Assert\Length(
         min:10,
-        minMessage:"Minimum {{ limit }} characters please"
+        minMessage:"Minimum {{ limit }} chiffres svp"
+    )]
+    #[Assert\Regex("/^[0-9]*$/",
+        message: "Le numéro de téléphone ne doit contenir que des chiffres"
     )]
     #[ORM\Column(length: 20)]
     private ?string $telephone = null;
 
-    #[Assert\NotBlank(message: "L'email' est obligatoire")]
-    // TODO : a tester
-    #[Assert\Regex('#[a-zA-Z]+([\.\-][a-zA-Z]+)?\.[a-zA-Z]{2,4}$#')]
+    #[Assert\NotBlank(message: "L'email est obligatoire")]
+    #[Assert\Regex('#[a-zA-Z]+([\.\-][a-zA-Z]+)?\.[a-zA-Z]{2,4}#',
+    message: 'Cet email n\'est pas valide')]
     #[ORM\Column(length: 255, unique: true)]
     private ?string $mail = null;
 
@@ -64,7 +67,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $sorties;
 
 
-    #[ORM\ManyToOne(inversedBy: 'participant')]
+    #[ORM\ManyToOne(inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $campus = null;
 

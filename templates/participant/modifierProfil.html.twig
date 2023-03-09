@@ -6,7 +6,7 @@
 
 {% block body %}
     <h2>Mon profil</h2>
-    {# TODO : retirer 'Participant' écrit sous le h2#}
+
     <div>
         {{ form_start(participantForm) }}
 
@@ -18,9 +18,8 @@
         {{ form_row(participantForm.password) }}
         {{ form_row(participantForm.campus) }}
 
-        {# TODO : récupérer id de l'utilisateur loggé + modifier ce path et celui de la navBar #}
         <a href="{{ path('participant_modifier', {'id': app.user.id}) }}"><button>Enregistrer</button></a>
-        <a href="{{ path('sortie_accueil') }}"><button type="button">Annuler</button></a>
+        <a href="{{ path('main_accueil') }}"><button type="button">Annuler</button></a>
 
         {{  form_end(participantForm) }}
     </div>

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Participant;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

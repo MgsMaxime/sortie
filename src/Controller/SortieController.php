@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Sortie;
 use App\Form\ModifierSortieType;
 use App\Form\SortieType;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,19 +84,30 @@ class SortieController extends AbstractController
             $this->addFlash("success","Sortie Modifiée !");
 
             //redirige vers la page accueil
-            return $this->redirectToRoute('sortie_accueil') ;
+            return $this->redirectToRoute('main_accueil') ;
         }
 
         return $this->render('sortie/modifier.html.twig', [
             'sortie'=>$sortie,
-            'ModfierSortie'=> $sortieForm->createView()
+            'ModifierSortie'=> $sortieForm->createView()
         ]);
     }
 
-    #[Route('/supprimer', name: 'supprimer')]
-    public function supprimer()
+    #[Route('/supprimer/{id}', name: 'supprimer')]
+    public function supprimer(int $id, SortieRepository $sortieRepository)
     {
-        return $this->render('sortie/supprimer.html.twig');
+
+        //Récupération de la série
+        $sortie = $sortieRepository->find($id);
+
+        if ($sortie){
+            //je le supprime
+            $sortieRepository->remove($sortie, true);
+            $this->addFlash("Warning", "Sortie deleted !");
+        }else{
+            throw $this->createNotFoundException("This serie can't be deleted !");
+        }
+        return $this->redirectToRoute('main_accueil');
     }
     #[Route('/publier', name: 'publier')]
     public function publier()
