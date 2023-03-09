@@ -63,7 +63,7 @@ class AppFixtures extends Fixture
         $sortie->setInfosSortie($this->faker->name);
         $sortie->setDuree($this->faker->randomNumber(3));
         $sortie->setDateHeureDebut($this->faker->dateTimeBetween('-2years', 'now'));
-        $sortie->setDateLimiteInscription($this->faker->dateTimeBetween('-2years', 'now'));
+        $sortie->setDateLimiteInscription($sortie->getDateHeureDebut());
         $sortie->setEtat($this->faker->randomElement($etats));
         $sortie->setLieu($this->faker->randomElement($lieux));
         $sortie->setNbInscriptionsMax($this->faker->randomNumber(3));
