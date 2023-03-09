@@ -107,7 +107,7 @@ class SortieController extends AbstractController
         }else{
             throw $this->createNotFoundException("This serie can't be deleted !");
         }
-        return $this->redirectToRoute('sortie_accueil');
+        return $this->redirectToRoute('main_accueil');
     }
     #[Route('/publier', name: 'publier')]
     public function publier()
