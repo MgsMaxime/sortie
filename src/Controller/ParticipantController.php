@@ -13,9 +13,7 @@ class ParticipantController extends AbstractController
     public function MonProfil(ParticipantRepository $participantRepository): Response
     {
         $user = $this->getUser();
-        //TODO :récup du campus
         $campus = $user->getCampus()->getNom();
-        dd($campus);
 
          $qb = $participantRepository->createQueryBuilder('p');
 

@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Form\LieuType;
 use App\Form\ModifierSortieType;
 use App\Form\SortieType;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\DataFixtures\AppFixtures;
 use App\Repository\CampusRepository;
@@ -78,9 +81,11 @@ class SortieController extends AbstractController
     }
 
     #[Route('/creation', name: 'creation')]
-    public function creation(SortieRepository $sortieRepository, Request $request): Response
+    public function creation(SortieRepository $sortieRepository, ParticipantRepository $participantRepository,Request $request): Response
     {
         $sortie = new Sortie();
+        //Affiche le campus par défaut de l'utilisateur
+        $sortie->setSiteOrganisateur($this->getUser()->getCampus());
 
         //Création d'une instance de form lié à une instance de sortie
         $sortieForm = $this->createForm(sortieType::class, $sortie);
@@ -106,6 +111,8 @@ class SortieController extends AbstractController
 
         ]);
     }
+
+
 
     #[Route('/{id}', name: 'afficher', requirements: ['id' => '\d+'])]
     public function afficher(int $id, SortieRepository $sortieRepository, ParticipantRepository $participantRepository): Response
@@ -154,10 +161,21 @@ class SortieController extends AbstractController
         ]);
     }
 
-    #[Route('/supprimer', name: 'supprimer')]
-    public function supprimer()
+    #[Route('/supprimer/{id}', name: 'supprimer')]
+    public function supprimer(int $id, SortieRepository $sortieRepository)
     {
-        return $this->render('sortie/supprimer.html.twig');
+
+        //Récupération de la série
+        $sortie = $sortieRepository->find($id);
+
+        if ($sortie){
+            //je le supprime
+            $sortieRepository->remove($sortie, true);
+            $this->addFlash("Warning", "Sortie deleted !");
+        }else{
+            throw $this->createNotFoundException("This serie can't be deleted !");
+        }
+        return $this->redirectToRoute('sortie_accueil');
     }
     #[Route('/publier', name: 'publier')]
     public function publier()

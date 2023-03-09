@@ -16,13 +16,73 @@
         {{ form_widget(sortieForm.nom) }}
         {{ form_errors(sortieForm.nom) }}
     </div>
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(sortieForm.dateHeureDebut) }}
+        {{ form_widget(sortieForm.dateHeureDebut) }}
+        {{ form_errors(sortieForm.dateHeureDebut) }}
+    </div>
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(sortieForm.duree) }}
+        {{ form_widget(sortieForm.duree) }}
+        {{ form_errors(sortieForm.duree) }}
+    </div>
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(sortieForm.dateLimiteInscription) }}
+        {{ form_widget(sortieForm.dateLimiteInscription) }}
+        {{ form_errors(sortieForm.dateLimiteInscription) }}
+    </div>
+
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(sortieForm.nbInscriptionsMax) }}
+        {{ form_widget(sortieForm.nbInscriptionsMax) }}
+        {{ form_errors(sortieForm.nbInscriptionsMax) }}
+    </div>
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(sortieForm.infosSortie) }}
+        {{ form_widget(sortieForm.infosSortie) }}
+        {{ form_errors(sortieForm.infosSortie) }}
+    </div>
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(sortieForm.siteOrganisateur) }}
+        {{  form_widget(sortieForm.siteOrganisateur) }}
+        {{ form_errors(sortieForm.siteOrganisateur) }}
+    </div>
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(sortieForm.organisateur) }}
+        {{ form_widget(sortieForm.organisateur) }}
+        {{ form_errors(sortieForm.organisateur) }}
+    </div>
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(sortieForm.lieu) }}
+        {{ form_widget(sortieForm.lieu) }}
+        {{ form_errors(sortieForm.lieu) }}
+        <a href="{{ path('lieu_creation') }}"><button type="button">Nouveau lieu</button></a>
+    </div>
+    <div class="creation-sortie">
+        {# découpage par champ #}
+        {{ form_label(sortieForm.etat) }}
+        {{ form_widget(sortieForm.etat) }}
+        {{ form_errors(sortieForm.etat) }}
+    </div>
 
     {# affichage du reste du form #}
     {{ form_rest(sortieForm) }}
 
+{#    Les boutons sans typage dans le block form sont automatiquement tous submit (donc toujours typé ceux qui ne #}
+{#    servent à d'autres fonction que 'save'#}
+
     <a href="{{ path('sortie_accueil') }}"><button>Enregistrer</button></a>
-    <a href="{{ path('sortie_accueil') }}"><button>Publier la sortie</button></a>
-    <a href="{{ path('sortie_accueil') }}"><button>Annuler</button></a>
+    <a href="{{ path('sortie_accueil') }}"><button type="button">Publier la sortie</button></a>
+    <a href="{{ path('sortie_accueil') }}"><button type="button">Annuler</button></a>
+
     {# fin du formulaire #}
     {{ form_end(sortieForm) }}
 {% endblock %}
