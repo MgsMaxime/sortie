@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Villes{% endblock %}
+
+{% block body %}
+<h2>Filtrer les villes</h2>
+<div >
+    {# input type search avec requête personnalisée identique au FiltresAccueilType #}
+
+</div>
+
+    <tr>
+        <th>Ville</th>
+        <th>Code postal</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ville in villes %}
+    <tr>
+        <td>{{ ville.nom }}</td>
+        <td>{{ ville.codePostal }}</td>
+        <td>
+            {# liens Modifier / Supprimer #}
+            <a href="{{ path('ville_modifier', {'id': ville.id}) }}">Modifier</a>
+            <a href="{{ path('ville_supprimer', {'id': ville.id}) }}">Supprimer</a>
+        </td>
+    </tr>
+    {% endfor %}
+    <tr>
+        {# <td> ajouter champs de saisie dans colonne ville #}
+        {# <td> ajouter champs de saisie dans colonne Code postal #}
+        {# <td> ajouter lien "Ajouter" pour ajouter en BDD  #}
+    </tr>
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}
