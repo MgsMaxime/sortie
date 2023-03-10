@@ -5,11 +5,13 @@
 {% block body %}
 
     <h1>Créer un profil</h1>
-    <div>
-        <img src="{{ asset('img/photoProfil/' ~ app.user.photoProfil) }}"
-             alt="{{ app.user.pseudo }}"
-             title="{{ app.user.pseudo }}">
-    </div>
+    {% if asset('img/photoProfil/' ~ app.user..photoProfil) %}
+        <div>
+            <img src="{{ asset('img/photoProfil/' ~ app.user.photoProfil) }}"
+                 alt="{{ app.user.pseudo }}"
+                 title="{{ app.user.pseudo }}">
+        </div>
+    {% endif %}
 
     {{ form_start(registrationForm) }}
     {{ form_row(participantForm.photo_profil) }}
