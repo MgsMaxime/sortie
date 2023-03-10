@@ -57,6 +57,17 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         $this->save($user, true);
     }
 
+    public function findByIdentifier(String $userID){
+
+        $results = $this->createQueryBuilder('s')
+            ->where('s.pseudo = :query OR s.mail = :query')
+            ->setParameter('query', $userID)
+            ->getQuery()
+            ->getResult();
+
+        return $results[0];
+
+    }
 
     public function loadUserByUsername($usernameOrEmail)
     {

@@ -124,22 +124,31 @@ class SortieController extends AbstractController
     }
 
     #[Route('/inscription/{id}', name: 'inscription', requirements: ['id'=>'\d+'])]
-    public function inscription(ParticipantRepository $participantRepository, SortieRepository $sortieRepository, int $id)
+    public function inscription(ParticipantRepository $participantRepository, SortieRepository $sortieRepository, Sortie $id)
     {
         $userID = $this->getUser()->getUserIdentifier();
-        $results = $participantRepository->createQueryBuilder('s')
-            ->where('s.pseudo = :query OR s.mail = :query')
-            ->setParameter('query', $userID)
-            ->getQuery()
-            ->getResult();;
 
-        $sortie = $sortieRepository->find($id);
-
-        if ($sortie->getParticipants()->count() < $sortie->getNbInscriptionsMax()){
-            $sortie->addParticipant($results[0]);
-            $sortieRepository->save($sortie, true);
+        if ($id->getParticipants()->count() < $id->getNbInscriptionsMax()){
+            $id->addParticipant($participantRepository->findByIdentifier($userID));
+            $sortieRepository->save($id, true);
         } else {
             $this->addFlash("Warning", "Nombre d'inscrits maximum atteint !");
+        }
+
+        return $this->redirectToRoute("main_accueil");
+    }
+
+    #[Route('/desinscription/{id}', name: 'desinscription', requirements: ['id'=>'\d+'])]
+    public function desinscription(ParticipantRepository $participantRepository, SortieRepository $sortieRepository, Sortie $id)
+    {
+        $userID = $this->getUser()->getUserIdentifier();
+        $user = $participantRepository->findByIdentifier($userID);
+
+        if ($id->getParticipants()->contains($user)){
+            $id->removeParticipant($user);
+            $sortieRepository->save($id, true);
+        } else {
+            $this->addFlash("Warning", "Vous n'êtes pas inscrit à cette sortie !");
         }
 
         return $this->redirectToRoute("main_accueil");
