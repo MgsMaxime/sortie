@@ -8,8 +8,9 @@
 
     <h2>{{ app.user.userIdentifier }}</h2>
 
-    {# TODO : récupérer img téléchargée (fin itération 1) #}
-    <img src="" alt="Photo de profil">
+    <div>
+        <img src="{{ asset('img/photoProfil/' ~ user.photo_profil) }}" alt="{{ user.pseudo }}">
+    </div>
 
     <div>Prénom : {{ app.user.prenom }}</div>
     <div>Nom : {{ app.user.nom }}</div>

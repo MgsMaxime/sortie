@@ -7,9 +7,18 @@
 {% block body %}
     <h2>Mon profil</h2>
 
+    {% if asset('img/photoProfil/' ~ app.user.photoProfil) %}
+        <div>
+            <img src="{{ asset('img/photoProfil/' ~ app.user.photoProfil) }}"
+                 alt="{{ app.user.pseudo }}"
+                 title="{{ app.user.pseudo }}">
+        </div>
+    {% endif %}
+
     <div>
         {{ form_start(participantForm) }}
 
+        {{ form_row(participantForm.photo_profil) }}
         {{ form_row(participantForm.pseudo) }}
         {{ form_row(participantForm.nom) }}
         {{ form_row(participantForm.prenom) }}

@@ -6,11 +6,13 @@ use App\Entity\Campus;
 use App\Entity\Participant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class RegistrationFormType extends AbstractType
 {
@@ -35,9 +37,17 @@ class RegistrationFormType extends AbstractType
                 'class' => Campus::class,
                 'choice_label' => 'nom'
             ])
-            // TODO : ajouter photo de profil (fin itération 1)
-            //->add('photoDeProfil')
-        ;
+            ->add('photo_profil', FileType::class, [
+                'mapped'=> false,
+                'constraints' => [
+                    new Image([
+                        // 5 megaOctets = 5M
+                        'maxSize' => '5000k',
+                        // mimesTypes = extensions des fichiers (par défaut image/*)
+                        'mimeTypesMessage' => "Format d'image non autorisé !"
+                    ])
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

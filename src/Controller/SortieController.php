@@ -2,16 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\AnnuleType;
 use App\Form\ModifierSortieType;
 use App\Form\SortieType;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[Route('/sortie', name: 'sortie_')]
 class SortieController extends AbstractController
@@ -149,6 +152,36 @@ class SortieController extends AbstractController
         ]);
     }
 
+    #[Route('/inscription/{id}', name: 'inscription', requirements: ['id'=>'\d+'])]
+    public function inscription(ParticipantRepository $participantRepository, SortieRepository $sortieRepository, Sortie $id)
+    {
+        $userID = $this->getUser()->getUserIdentifier();
+
+        if ($id->getParticipants()->count() < $id->getNbInscriptionsMax()){
+            $id->addParticipant($participantRepository->findByIdentifier($userID));
+            $sortieRepository->save($id, true);
+        } else {
+            $this->addFlash("Warning", "Nombre d'inscrits maximum atteint !");
+        }
+
+        return $this->redirectToRoute("main_accueil");
+    }
+
+    #[Route('/desinscription/{id}', name: 'desinscription', requirements: ['id'=>'\d+'])]
+    public function desinscription(ParticipantRepository $participantRepository, SortieRepository $sortieRepository, Sortie $id)
+    {
+        $userID = $this->getUser()->getUserIdentifier();
+        $user = $participantRepository->findByIdentifier($userID);
+
+        if ($id->getParticipants()->contains($user)){
+            $id->removeParticipant($user);
+            $sortieRepository->save($id, true);
+        } else {
+            $this->addFlash("Warning", "Vous n'êtes pas inscrit à cette sortie !");
+        }
+
+        return $this->redirectToRoute("main_accueil");
+    }
 
 
 }

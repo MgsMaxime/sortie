@@ -55,7 +55,7 @@ class AppFixtures extends Fixture
     $users = $userrepo->findAll();
 
 
-    for ($i=0; $i<50; $i++){
+    for ($i=0; $i<100; $i++){
 
         $sortie = new Sortie();
 
@@ -79,7 +79,7 @@ class AppFixtures extends Fixture
 
     public function addEtat(ObjectManager $manager){
 
-        $possibilities=["Créee", "Ouverte", "Clôturée", 'Activité en cours', "Annulée"];
+        $possibilities=["Créee", "Ouverte", "Clôturée", 'Activité en cours', "Annulée", "Passée"];
 
         for ($i=0; $i<sizeof($possibilities); $i++){
 
@@ -145,6 +145,7 @@ class AppFixtures extends Fixture
         $campus = $campusrepo->findAll();
 
         $participant = new Participant();
+        $participant->setPhotoProfil("Admin.jpg");
         $participant->setNom("Admin");
         $participant->setPrenom("Admin");
         $participant->setMail("admin@gmail.com");

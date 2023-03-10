@@ -1,31 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Nouveau profil{% endblock %}
 
 {% block body %}
-<h1>Mon profil</h1>
 
-{{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.telephone) }}
-        {{ form_row(registrationForm.mail) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Mot de passe'
-        }) }}
-        {{ form_row(registrationForm.campus) }}
+    <h1>Créer un profil</h1>
+    <div>
+        <img src="{{ asset('img/photoProfil/' ~ app.user.photoProfil) }}"
+             alt="{{ app.user.pseudo }}"
+             title="{{ app.user.pseudo }}">
+    </div>
 
-    {# TODO permettre téléchargement photo de profil  (fin itération 1) #}
-    <img src="" alt="Ma photo : ">
-    <button>Télécharger vers le serveur</button>
-    <br>
+    {{ form_start(registrationForm) }}
+    {{ form_row(participantForm.photo_profil) }}
 
+    {{ form_row(registrationForm.pseudo) }}
+    {{ form_row(registrationForm.prenom) }}
+    {{ form_row(registrationForm.nom) }}
+    {{ form_row(registrationForm.telephone) }}
+    {{ form_row(registrationForm.mail) }}
+    {{ form_row(registrationForm.plainPassword, {label: 'Mot de passe'}) }}
+    {{ form_row(registrationForm.campus) }}
 
     {# TODO Rendre ce bouton accessible qu'aux admin #}
     {# {% if is_granted("ROLE_ADMIN") %} #}
-    <button type="submit" class="btn">S'enregistrer</button>
-    {# {% endif %}#}
+    <button type="submit" class="btn">Télécharger vers le serveur</button>
+    {# {% endif %} #}
 
     {{ form_end(registrationForm) }}
 
