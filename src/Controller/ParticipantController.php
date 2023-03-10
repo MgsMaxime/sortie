@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Sortie;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
+use App\Repository\SortieRepository;
 use App\Utils\Uploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -15,10 +17,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParticipantController extends AbstractController
 {
 
-    #[Route('/profilOrganisateur', name: 'profil_organisateur')]
-    public function monProfil(): Response
+    #[Route('/profilOrganisateur/{id}', name: 'profil_organisateur', requirements: ['id' => '\d+'])]
+    public function afficherProfilOrganisateur(int $id, SortieRepository $sortieRepository, Request $request): Response
     {
-        return $this->render('participant/profilOrganisateur.html.twig');
+        // récupérer id de la sortie (id = 116)
+        // $sortieOrganisee = $sortieRepository->find($id);
+        $sortieOrganisee = $sortieRepository->find($id);
+        // dd($sortieOrganisee);
+
+        // récupérer id de l'organisateur de la sortie (id = 73)
+        $organisateur = $sortieOrganisee->getOrganisateur();
+
+
+
+
+
+        return $this->render('participant/profilOrganisateur.html.twig',[
+            'organisateur'=> $organisateur
+        ]);
     }
 
     #[Route('/modifier/{id}', name: 'modifier', requirements: ['id' => '\d+'])]
@@ -43,10 +59,8 @@ class ParticipantController extends AbstractController
              */
             // upload crée en service
             $file = $participantForm->get('photo_profil')->getData();
-             //dd($file); récupère un null alors que photo présente
 
-            // TODO : à modifier pour que si user ne modifie pas la photo, on recup l'ancienne
-            // si non null = upload, sinon appel pseudo.img
+            // si non null => upload, sinon appel pseudo.img
             if (!$file) {
                 $participant->setPhotoProfil($photo);
             }else {
@@ -70,7 +84,6 @@ class ParticipantController extends AbstractController
             // rediriger vers le profil modifié
             return $this->redirectToRoute('participant_modifier', ['id' => $participant->getId()]);
         }
-        // dd($participant); récupère bien le nom de la photo de profil en BDD
 
         // afficher le formulaire de modification
         return $this->render('participant/modifierProfil.html.twig', [
@@ -79,6 +92,7 @@ class ParticipantController extends AbstractController
     }
 
     // TODO : if Admin = afficher register pour création utilisateur
+
 
 }
 
