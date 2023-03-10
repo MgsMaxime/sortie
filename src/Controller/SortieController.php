@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\ModifierSortieType;
 use App\Form\SortieType;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[Route('/sortie', name: 'sortie_')]
 class SortieController extends AbstractController
@@ -120,6 +123,27 @@ class SortieController extends AbstractController
         return $this->render('sortie/annuler.html.twig');
     }
 
+    #[Route('/inscription/{id}', name: 'inscription', requirements: ['id'=>'\d+'])]
+    public function inscription(ParticipantRepository $participantRepository, SortieRepository $sortieRepository, int $id)
+    {
+        $userID = $this->getUser()->getUserIdentifier();
+        $results = $participantRepository->createQueryBuilder('s')
+            ->where('s.pseudo = :query OR s.mail = :query')
+            ->setParameter('query', $userID)
+            ->getQuery()
+            ->getResult();;
+
+        $sortie = $sortieRepository->find($id);
+
+        if ($sortie->getParticipants()->count() < $sortie->getNbInscriptionsMax()){
+            $sortie->addParticipant($results[0]);
+            $sortieRepository->save($sortie, true);
+        } else {
+            $this->addFlash("Warning", "Nombre d'inscrits maximum atteint !");
+        }
+
+        return $this->redirectToRoute("main_accueil");
+    }
 
 
 }

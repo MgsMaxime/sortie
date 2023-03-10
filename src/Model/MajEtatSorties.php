@@ -36,7 +36,7 @@ class MajEtatSorties
 
             if ($sortie->getEtat()->getLibelle() == "Passée" && $diff) {
                 $sortie->setEtat($etat[0]);
-                $sortieRepository->save($sortie);
+                $entityManager->persist($sortie);
             }
         }
 
