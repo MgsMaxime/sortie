@@ -41,7 +41,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[Assert\NotBlank(message: "Le téléphone est obligatoire")]
-    #[Assert\Type ("integer", "Le numéro de téléphone ne doit être composé que de chiffres")]
     #[Assert\Length(
         min:10,
         minMessage:"Minimum {{ limit }} chiffres svp"

@@ -55,29 +55,17 @@
     </div>
     <div class="creation-sortie">
         {# découpage par champ #}
-        {{ form_label(sortieForm.organisateur) }}
-        {{ form_widget(sortieForm.organisateur) }}
-        {{ form_errors(sortieForm.organisateur) }}
-    </div>
-    <div class="creation-sortie">
-        {# découpage par champ #}
         {{ form_label(sortieForm.lieu) }}
         {{ form_widget(sortieForm.lieu) }}
         {{ form_errors(sortieForm.lieu) }}
         <a href="{{ path('lieu_creation') }}"><button type="button">Nouveau lieu</button></a>
     </div>
-    <div class="creation-sortie">
-        {# découpage par champ #}
-        {{ form_label(sortieForm.etat) }}
-        {{ form_widget(sortieForm.etat) }}
-        {{ form_errors(sortieForm.etat) }}
-    </div>
 
     {# affichage du reste du form #}
     {{ form_rest(sortieForm) }}
 
-    <a href="{{ path('main_accueil') }}"><button>Enregistrer</button></a>
-    <a href="{{ path('main_accueil') }}"><button type="button">Publier la sortie</button></a>
+    <button name="bjr" value="creee" >Enregistrer</button>
+    <button name="bjr" value="publier">Publier la sortie</button>
     <a href="{{ path('main_accueil') }}"><button type="button">Annuler</button></a>
     {# fin du formulaire #}
     {{ form_end(sortieForm) }}

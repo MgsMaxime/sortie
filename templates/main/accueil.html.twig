@@ -61,7 +61,7 @@
                                 <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}"> - S'inscrire</a>
                             {% endif %}
                             {% if sortie.organisateur is same as app.user and sortie.etat.libelle is same as "Activité en cours" %}
-                                <a href="">Modifier</a>
+                                <a href="{{ path('sortie_modifier', {'id': sortie.id}) }}">Modifier</a>
                             {% endif %}
                             {% if sortie.organisateur is same as app.user and sortie.etat.libelle is same as "Activité en cours" %}
                                 <a href=""> - Publier</a>

@@ -66,24 +66,13 @@ class SortieType extends AbstractType
                 ]
 
             )
-            ->add('organisateur', EntityType::class, [
-                'class' => Participant::class,
-                'choice_label' => 'nom'
-            ])
 //            ->add('participants', EntityType::class, [
 //                'class' => Participant::class
 //            ])
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'nom'
-            ])
-            ->add('etat', EntityType::class,
-                [
-                    'class' => Etat::class,
-                    'choice_label' => 'libelle'
-                ]
-
-            );
+            ]);
             //Bouton enregistrer
 //            ->add('save', SubmitType::class, [
 //                'label'=> 'Enregistrer',
