@@ -5,7 +5,7 @@
 {% block body %}
 
     <h1>Créer un profil</h1>
-    {% if asset('img/photoProfil/' ~ app.user..photoProfil) %}
+    {% if asset('img/photoProfil/' ~ app.user.photoProfil) %}
         <div>
             <img src="{{ asset('img/photoProfil/' ~ app.user.photoProfil) }}"
                  alt="{{ app.user.pseudo }}"

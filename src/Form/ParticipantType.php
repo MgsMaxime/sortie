@@ -56,6 +56,4 @@ class ParticipantType extends AbstractType
             'data_class' => Participant::class,
         ]);
     }
-
-    //TODO : mettre ici téléchargement et renommage upload du ParticipantController ???
 }
