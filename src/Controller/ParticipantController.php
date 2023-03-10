@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
+use App\Utils\Uploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,10 +22,11 @@ class ParticipantController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'modifier', requirements: ['id' => '\d+'])]
-    public function modifierProfil(int $id, ParticipantRepository $participantRepository, Request $request)
+    public function modifierProfil(int $id, ParticipantRepository $participantRepository, Request $request, Uploader $uploader)
     {
         // récupérer le participant grâce à son id
         $participant = $participantRepository->find($id);
+        $photo = $participant->getPhotoProfil();
 
         // instance de form liée à une instance de participant
         $participantForm = $this->createForm(participantType::class, $participant);
@@ -31,29 +34,34 @@ class ParticipantController extends AbstractController
         $participantForm->handleRequest($request);
 
 
-
         // si le formulaire est soumis et valide
         if ($participantForm->isSubmitted() && $participantForm->isValid()) {
-            // récupérer les nouvelles données
-            $pseudo = $participantForm->get('pseudo')->getData();
-            $prenom = $participantForm->get('prenom')->getData();
-            $nom = $participantForm->get('nom')->getData();
-            $telephone = $participantForm->get('telephone')->getData();
-            $mail = $participantForm->get('mail')->getData();
-            $password = $participantForm->get('password')->getData();
-            $campus = $participantForm->get('campus')->getData();
 
+            // upload photo de profil
+            /**
+             * @var UploadedFile $file
+             */
+            // upload crée en service
+            $file = $participantForm->get('photo_profil')->getData();
+             //dd($file); récupère un null alors que photo présente
 
-            // setter les nouvelles données si présente
-            $participant->setPseudo($pseudo);
-            $participant->setPrenom($prenom);
-            $participant->setNom($nom);
-            $participant->setTelephone($telephone);
-            $participant->setMail($mail);
-            if($password != null){
-                $participant->setPassword($password);
+            // TODO : à modifier pour que si user ne modifie pas la photo, on recup l'ancienne
+            // si non null = upload, sinon appel pseudo.img
+            if (!$file) {
+                $participant->setPhotoProfil($photo);
+            }else {
+
+            // appel de l'uploader
+            $newFileName = $uploader->upload(
+                $file,
+                // récupérer le paramètre de services.yaml
+                $this->getParameter('upload_photo_profil'),
+                $participant->getPseudo()
+            );
+
+            // setter le nouveau nom du fichier uploadé
+            $participant->setPhotoProfil($newFileName);
             }
-            $participant->setCampus($campus);
 
             // sauvegarder les nouvelles données en BDD
             $participantRepository->save($participant, true);
@@ -62,13 +70,15 @@ class ParticipantController extends AbstractController
             // rediriger vers le profil modifié
             return $this->redirectToRoute('participant_modifier', ['id' => $participant->getId()]);
         }
+        // dd($participant); récupère bien le nom de la photo de profil en BDD
 
         // afficher le formulaire de modification
         return $this->render('participant/modifierProfil.html.twig', [
-            'participantForm' => $participantForm->createView(),
-            'participant' => $participant
+            'participantForm' => $participantForm->createView()
         ]);
     }
+
+    // TODO : if Admin = afficher register pour création utilisateur
 
 }
 
