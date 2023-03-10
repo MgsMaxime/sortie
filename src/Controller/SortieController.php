@@ -7,8 +7,11 @@ use App\Entity\Sortie;
 use App\Form\AnnuleType;
 use App\Form\ModifierSortieType;
 use App\Form\SortieType;
+use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -121,11 +124,14 @@ class SortieController extends AbstractController
         return $this->render('sortie/publier.html.twig');
     }
     #[Route('/annuler/{id}', name: 'annuler', requirements: ['id'=>'\d+'])]
-    public function annuler(int $id, SortieRepository $sortieRepository, Request $request): Response
+    public function annuler(int $id, SortieRepository $sortieRepository, Request $request,EntityManagerInterface $em,
+                            EtatRepository $etatRepository
+    ): Response
     {
         $sortievide = new Sortie();
         $sortie = $sortieRepository->find($id);
         $sorteiInfo =$sortie->getInfosSortie();
+        $sortieEtat = $sortie->getEtat();
 
         //Création formulaire annuler sortie
         $sortieForm=$this->createForm(AnnuleType::class,$sortievide );
@@ -135,8 +141,11 @@ class SortieController extends AbstractController
 
         if ($sortieForm->isSubmitted() /*&& $sortieForm->isValid()*/){
 
+
             //modifier la description de sortie
             $sortie->setInfosSortie($sorteiInfo . $sortievide->getInfosSortie());
+            $sortieEtat = $etatRepository->findByLibelle('Annulée');
+            $sortie->setEtat($sortieEtat[0]);
             //sauvegarde en BDD la modification de l'event
             $sortieRepository->save($sortie, true);
 
