@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Sortie;
+use App\Form\AnnuleType;
 use App\Form\ModifierSortieType;
 use App\Form\SortieType;
 use App\Repository\ParticipantRepository;
@@ -116,10 +117,36 @@ class SortieController extends AbstractController
     {
         return $this->render('sortie/publier.html.twig');
     }
-    #[Route('/annuler', name: 'annuler')]
-    public function annuler()
+    #[Route('/annuler/{id}', name: 'annuler', requirements: ['id'=>'\d+'])]
+    public function annuler(int $id, SortieRepository $sortieRepository, Request $request): Response
     {
-        return $this->render('sortie/annuler.html.twig');
+        $sortievide = new Sortie();
+        $sortie = $sortieRepository->find($id);
+        $sorteiInfo =$sortie->getInfosSortie();
+
+        //Création formulaire annuler sortie
+        $sortieForm=$this->createForm(AnnuleType::class,$sortievide );
+
+        //Méthode qui extrait les éléments du formulaire
+        $sortieForm->handleRequest($request);
+
+        if ($sortieForm->isSubmitted() /*&& $sortieForm->isValid()*/){
+
+            //modifier la description de sortie
+            $sortie->setInfosSortie($sorteiInfo . $sortievide->getInfosSortie());
+            //sauvegarde en BDD la modification de l'event
+            $sortieRepository->save($sortie, true);
+
+            $this->addFlash("success","Sortie Annulée !");
+
+            //redirige vers la page accueil
+            return $this->redirectToRoute('main_accueil') ;
+        }
+
+        return $this->render('sortie/annuler.html.twig',[
+        'sortie'=>$sortie,
+            'AnnulerSortie'=>$sortieForm->createView()
+        ]);
     }
 
 
