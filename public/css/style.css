@@ -110,7 +110,7 @@ label {
 input,
 select {
     margin-bottom: 1rem;
-    box-sizing: border-box;
+    box-sizing: content-box;
     width: 200px;
     max-width: 50%;
 }

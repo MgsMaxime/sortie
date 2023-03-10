@@ -67,6 +67,7 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
             ->getOneOrNullResult();
     }
 
+
 //    /**
 //     * @return Participant[] Returns an array of Participant objects
 //     */

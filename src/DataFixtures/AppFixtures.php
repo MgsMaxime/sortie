@@ -145,6 +145,7 @@ class AppFixtures extends Fixture
         $campus = $campusrepo->findAll();
 
         $participant = new Participant();
+        $participant->setPhotoProfil("Admin.jpg");
         $participant->setNom("Admin");
         $participant->setPrenom("Admin");
         $participant->setMail("admin@gmail.com");

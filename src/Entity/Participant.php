@@ -71,6 +71,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $campus = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo_profil = null;
+
 
     public function __construct()
     {
@@ -289,6 +292,18 @@ public function getCampus(): ?Campus
 public function setCampus(?Campus $campus): self
 {
     $this->campus = $campus;
+
+    return $this;
+}
+
+public function getPhotoProfil(): ?string
+{
+    return $this->photo_profil;
+}
+
+public function setPhotoProfil(?string $photo_profil): self
+{
+    $this->photo_profil = $photo_profil;
 
     return $this;
 }
