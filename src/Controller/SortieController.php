@@ -198,7 +198,9 @@ class SortieController extends AbstractController
             $this->addFlash("Warning", "Nombre d'inscrits maximum atteint !");
         }
 
-        return $this->redirectToRoute("main_accueil");
+        return $this->redirectToRoute("sortie_afficher",[
+            'id'=> $id->getId(),
+        ]);
     }
 
     #[Route('/desinscription/{id}', name: 'desinscription', requirements: ['id' => '\d+'])]
@@ -216,6 +218,4 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute("main_accueil");
     }
-
-
 }
