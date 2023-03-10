@@ -6,17 +6,20 @@
 
 {% block body %}
 
-    <h2>{{ app.user.userIdentifier }}</h2>
+    <h2>{{ organisateur.pseudo }}</h2>
 
     <div>
-        <img src="{{ asset('img/photoProfil/' ~ user.photo_profil) }}" alt="{{ user.pseudo }}">
+{#        if elle existe#}
+        {% if asset('img/photoProfil/' ~ organisateur.photoProfil) %}
+        <img src="{{ asset('img/photoProfil/' ~ organisateur.photoProfil) }}" alt="{{ organisateur.pseudo }}">
+        {% endif %}
     </div>
 
-    <div>Prénom : {{ app.user.prenom }}</div>
-    <div>Nom : {{ app.user.nom }}</div>
-    <div>Téléphone : {{ app.user.telephone }}</div>
-    <div>Mail : {{ app.user.mail }}</div>
-    <div>Campus : {{ app.user.campus.nom }}</div>
+    <div>Prénom : {{ organisateur.prenom }}</div>
+    <div>Nom : {{ organisateur.nom }}</div>
+    <div>Téléphone : {{ organisateur.telephone }}</div>
+    <div>Mail : {{ organisateur.mail }}</div>
+    <div>Campus : {{ organisateur.campus.nom }}</div>
     <br>
 
 {% endblock %}

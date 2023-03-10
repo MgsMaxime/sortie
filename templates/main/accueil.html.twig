@@ -47,7 +47,9 @@
                                 X
                             {% endif %}
                         </td>
-                        <td>{{ sortie.organisateur.nom }}</td>
+                        <td>
+                            <a href="{{ path('participant_profil_organisateur', {'id': sortie.id}) }}">{{ sortie.organisateur.nom }}</a>
+                        </td>
                         <td>
                             {% if sortie.etat.libelle is not same as "Activité en cours" %}
                                 <a href="{{ path('sortie_afficher', {'id': sortie.id}) }}">Afficher</a>
