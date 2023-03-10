@@ -19,7 +19,8 @@ class AnnuleType extends AbstractType
     {
         $builder
             ->add('infosSortie',TextareaType::class,[
-                'label'=>'Motif'
+                'label'=>'Motif',
+                'mapped'=>false
             ])
         ;
     }

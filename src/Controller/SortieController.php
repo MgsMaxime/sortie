@@ -128,22 +128,22 @@ class SortieController extends AbstractController
                             EtatRepository $etatRepository
     ): Response
     {
-        $sortievide = new Sortie();
         $sortie = $sortieRepository->find($id);
         $sorteiInfo =$sortie->getInfosSortie();
         $sortieEtat = $sortie->getEtat();
 
         //Création formulaire annuler sortie
-        $sortieForm=$this->createForm(AnnuleType::class,$sortievide );
+        $sortieForm=$this->createForm(AnnuleType::class);
 
         //Méthode qui extrait les éléments du formulaire
         $sortieForm->handleRequest($request);
 
-        if ($sortieForm->isSubmitted() /*&& $sortieForm->isValid()*/){
+        if ($sortieForm->isSubmitted()){
 
+            $motif = $sortieForm->get('infosSortie')->getData();
 
             //modifier la description de sortie
-            $sortie->setInfosSortie($sorteiInfo . $sortievide->getInfosSortie());
+            $sortie->setInfosSortie($sorteiInfo . $motif);
             $sortieEtat = $etatRepository->findByLibelle('Annulée');
             $sortie->setEtat($sortieEtat[0]);
             //sauvegarde en BDD la modification de l'event
