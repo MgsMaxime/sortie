@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Ville;
 use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +16,6 @@ class VilleController extends AbstractController
     public function afficherVilles(VilleRepository $villeRepository): Response
     {
         $villes = $villeRepository->findAll();
-        // à créer pour bouton recherche avec 'le nom contient :'
-
-        //$sorties = $sortieRepository->findBy(["nom" => "'%'saisie'%'"]);
-
 
         if(!$villes){
             throw $this->createNotFoundException("Oups, les villes n'ont pas été trouvées !");
@@ -34,6 +31,7 @@ class VilleController extends AbstractController
     {
         $saisie = $request->query->get('saisie');
 
+        // TODO : gérer les exceptions 404
         if(empty($saisie)){
             return $this->redirectToRoute('ville_afficher');
         }
@@ -41,12 +39,14 @@ class VilleController extends AbstractController
         $villes = $villeRepository->createQueryBuilder('v')
             ->where('v.nom LIKE :nom')
             ->setParameter('nom', '%'.$saisie.'%')
+            ->orderBy('v.nom', 'ASC')
             ->getQuery()
             ->getResult();
 
         if(empty($villes)){
-//            // TODO : gérer les exceptions 404 -> le navigateur empêche une saisie vide
-//            throw $this->createNotFoundException("Oups, aucune ville n'a été trouvée !");
+            // TODO : gérer les exceptions 404
+            // throw $this->createNotFoundException("Oups, aucune ville n'a été trouvée !");
+            // à remplacer par message +
             return $this->redirectToRoute('ville_afficher');
         }
 
@@ -56,24 +56,28 @@ class VilleController extends AbstractController
         ]);
     }
 
-
     #[Route('ajouter/{id}', name: 'ajouter')]
-    public function ajouterVille(){
-        // TODO
+    public function ajouterVille(VilleRepository $villeRepository, Request $request): Response
+    {
+        // TODO : function ajouterVille() avec exception
+        $ville = new Ville();
+
 
         return $this->render('ville/afficherVilles.html.twig');
     }
 
     #[Route('modifier/{id}', name: 'modifier')]
-    public function modifierVille(){
-        // TODO
+    public function modifierVille(VilleRepository $villeRepository, Request $request): Response
+    {
+        // TODO : function modifierVille() avec exception
 
         return $this->render('ville/afficherVilles.html.twig');
     }
 
     #[Route('supprimer/{id}', name: 'supprimer')]
-    public function supprimerVille(){
-        // TODO
+    public function supprimerVille(VilleRepository $villeRepository, Request $request): Response
+    {
+        // TODO : function supprimerVille() avec exception
 
         return $this->render('ville/afficherVilles.html.twig');
     }

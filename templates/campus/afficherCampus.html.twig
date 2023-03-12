@@ -8,12 +8,12 @@
     {# pas de formType pour un seul champ mais un queryBuilder dans le VilleController #}
     <form method="get" action="{{ path('campus_filtrer') }}">
         <label for="saisie">Le nom contient :</label>
-        <input type="text" id="saisie" name="saisie" value="{{ saisie ?? '' }}" required>
+        <input type="text" id="saisie" name="saisie" value="{{ saisie ?? '' }}" >
         <button type="submit">Rechercher</button>
     </form>
 
     {% if allCampus is not empty %}
-        <table>
+        <table border>
             <thead>
             <tr>
                 <th>Campus</th>
@@ -35,7 +35,21 @@
                     <tr>
         {#                TODO : #}
         {#                <td> ajouter champs de saisie dans colonne campus </td>#}
+{#                        <td>#}
+{#                            <form method="get" action="{{ path('campus_ajouter', {'id': campus.id}) }}">#}
+{#                                <label for="saisie">Ajouter</label>#}
+{#                                <input type="text" id="saisie" name="saisie" value="{{ saisie ?? '' }}">#}
+{#                            </form>#}
+{#                        </td>#}
+{#
         {#                <td> ajouter lien "Ajouter" pour ajouter en BDD  </td>#}
+{#                        <td>#}
+{#                            <form method="get" action="{{ path('campus_ajouter', {'id': campus.id}) }}">#}
+{#                                <label for="saisie">Ajouter</label>#}
+{#                                <button type="submit">Ajouter</button>#}
+{#                            </form>#}
+{#                        </td>#}
+
                     </tr>
             </tbody>
         </table>
