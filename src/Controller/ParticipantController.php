@@ -20,12 +20,12 @@ class ParticipantController extends AbstractController
     #[Route('/profilOrganisateur/{id}', name: 'profil_organisateur', requirements: ['id' => '\d+'])]
     public function afficherProfilOrganisateur(int $id, SortieRepository $sortieRepository, Request $request): Response
     {
-        // récupérer id de la sortie (id = 116)
+        // récupérer id de la sortie
         // $sortieOrganisee = $sortieRepository->find($id);
         $sortieOrganisee = $sortieRepository->find($id);
         // dd($sortieOrganisee);
 
-        // récupérer id de l'organisateur de la sortie (id = 73)
+        // récupérer id de l'organisateur de la sortie
         $organisateur = $sortieOrganisee->getOrganisateur();
 
 

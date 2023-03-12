@@ -13,15 +13,37 @@ class VilleController extends AbstractController
     #[Route('/afficher', name: 'afficher')]
     public function afficherVilles(VilleRepository $villeRepository): Response
     {
-        $ville = $villeRepository->findAll();
+        $villes = $villeRepository->findAll();
+        // à créer pour bouton recherche avec 'le nom contient :'
 
-        if(!$ville){
-            throw $this->createNotFoundException("Oups ! Les villes n'ont pas été trouvée !");
+        //$sorties = $sortieRepository->findBy(["nom" => "'%'saisie'%'"]);
+
+
+        if(!$villes){
+            throw $this->createNotFoundException("Oups, les villes n'ont pas été trouvées !");
         }
+
         return $this->render('ville/afficherVilles.html.twig', [
-            'ville' => $ville
+            'villes' => $villes
         ]);
     }
+
+    #[Route('/filtrer', name: 'filtrer')]
+    public function filtrerVille(VilleRepository $villeRepository): Response
+    {
+        // TODO : requête personnalisée identique au FiltresAccueilType
+        // à créer pour bouton recherche avec 'le nom contient :'
+//        $villes = $villeRepository->findBy(["nom" => "'%'saisie'%'"]);
+//
+//        if(!$villes){
+//            throw $this->createNotFoundException("Oups, les villes n'ont pas été trouvées !");
+//        }
+
+        return $this->render('ville/afficherVilles.html.twig', [
+//            'villes' => $villes
+        ]);
+    }
+
 
     #[Route('ajouter/{id}', name: 'ajouter')]
     public function ajouterVille(){

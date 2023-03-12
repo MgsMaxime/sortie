@@ -10,15 +10,14 @@
             <li>
                 <a href="{{ path('app_logout') }}">Se déconnecter</a>
             </li>
-
+        {% endif %}
             {% if is_granted("ROLE_ADMIN") %}
                 <li>
                     <a href="{{ path('ville_afficher') }}">Villes</a>
                 </li>
                 <li>
-                    <a href="">Campus</a>
+                    <a href="{{ path('campus_afficher') }}">Campus</a>
                 </li>
             {% endif %}
-        {% endif %}
     </ul>
 </nav>
