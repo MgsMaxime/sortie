@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,18 +30,29 @@ class VilleController extends AbstractController
     }
 
     #[Route('/filtrer', name: 'filtrer')]
-    public function filtrerVille(VilleRepository $villeRepository): Response
+    public function filtrerVille(Request $request, VilleRepository $villeRepository): Response
     {
-        // TODO : requête personnalisée identique au FiltresAccueilType
-        // à créer pour bouton recherche avec 'le nom contient :'
-//        $villes = $villeRepository->findBy(["nom" => "'%'saisie'%'"]);
-//
-//        if(!$villes){
-//            throw $this->createNotFoundException("Oups, les villes n'ont pas été trouvées !");
-//        }
+        $saisie = $request->query->get('saisie');
+
+        if(empty($saisie)){
+            return $this->redirectToRoute('ville_afficher');
+        }
+
+        $villes = $villeRepository->createQueryBuilder('v')
+            ->where('v.nom LIKE :nom')
+            ->setParameter('nom', '%'.$saisie.'%')
+            ->getQuery()
+            ->getResult();
+
+        if(empty($villes)){
+//            // TODO : gérer les exceptions 404 -> le navigateur empêche une saisie vide
+//            throw $this->createNotFoundException("Oups, aucune ville n'a été trouvée !");
+            return $this->redirectToRoute('ville_afficher');
+        }
 
         return $this->render('ville/afficherVilles.html.twig', [
-//            'villes' => $villes
+            'villes' => $villes,
+            'saisie' => $saisie
         ]);
     }
 

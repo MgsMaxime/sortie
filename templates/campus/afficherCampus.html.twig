@@ -4,45 +4,42 @@
 
 {% block body %}
 <h2>Filtrer les campus</h2>
-    <div>
 
-        {# TODO : requête personnalisée identique au FiltresAccueilType #}
-        <div class="input_search">
-            <label for="campus-search">
-                <input type="search">
-                    <a href="">Rechercher</a>
-            </label>
-        </div>
+    {# pas de formType pour un seul champ mais un queryBuilder dans le VilleController #}
+    <form method="get" action="{{ path('campus_filtrer') }}">
+        <label for="saisie">Le nom contient :</label>
+        <input type="text" id="saisie" name="saisie" value="{{ saisie ?? '' }}" required>
+        <button type="submit">Rechercher</button>
+    </form>
 
-    </div>
-
-<table>
-    <thead>
-    <tr>
-        <th>Campus</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-
-    <tbody>
-        {% for campus in allCampus %}
+    {% if allCampus is not empty %}
+        <table>
+            <thead>
             <tr>
-                <td>{{ campus.nom }}</td>
-                <td>
-                    {# liens Modifier / Supprimer #}
-                    <a href="{{ path('campus_modifier', {'id': campus.id}) }}">Modifier </a>
-                    <a href="{{ path('campus_supprimer', {'id': campus.id}) }}"> - Supprimer</a>
-                </td>
+                <th>Campus</th>
+                <th>Actions</th>
             </tr>
-        {% endfor %}
-            <tr>
-{#                TODO : #}
-{#                <td> ajouter champs de saisie dans colonne campus </td>#}
-{#                <td> ajouter lien "Ajouter" pour ajouter en BDD  </td>#}
-            </tr>
-    </tbody>
-</table>
-    
+            </thead>
+
+            <tbody>
+                {% for campus in allCampus %}
+                    <tr>
+                        <td>{{ campus.nom }}</td>
+                        <td>
+                            {# liens Modifier / Supprimer #}
+                            <a href="{{ path('campus_modifier', {'id': campus.id}) }}">Modifier </a>
+                            <a href="{{ path('campus_supprimer', {'id': campus.id}) }}"> - Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                    <tr>
+        {#                TODO : #}
+        {#                <td> ajouter champs de saisie dans colonne campus </td>#}
+        {#                <td> ajouter lien "Ajouter" pour ajouter en BDD  </td>#}
+                    </tr>
+            </tbody>
+        </table>
+    {% endif %}
 
 {% endblock %}
 

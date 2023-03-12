@@ -16,14 +16,17 @@ class Ville
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
     #[Assert\NotBlank(message: "Veuillez saisir le nom de la ville")]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
+
     #[Assert\NotBlank(message: "Veuillez saisir le code postal de votre ville")]
     #[Assert\Length(
         max: 5,
         maxMessage:"Un code postal doit faire {{ limit }} caractères maximum !"
     )]
+
     #[ORM\Column]
     private ?int $codePostal = null;
 
