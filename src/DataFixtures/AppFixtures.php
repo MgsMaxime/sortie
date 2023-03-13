@@ -144,6 +144,7 @@ class AppFixtures extends Fixture
         $campusrepo = new CampusRepository($this->managerRegistry);
         $campus = $campusrepo->findAll();
 
+        // création d'un administrateur
         $participant = new Participant();
         $participant->setPhotoProfil("Admin.jpg");
         $participant->setNom("Admin");
@@ -153,6 +154,21 @@ class AppFixtures extends Fixture
         $participant->setPassword($passwordHasher->hashPassword($participant, "AdminMDP"));
         $participant->setPseudo("Admin");
         $participant->setRoles(['ROLE_ADMIN']);
+        $participant->setActif(true);
+        $participant->setCampus($this->faker->randomElement($campus));
+
+        $manager->persist($participant);
+
+        // création d'un user
+        $participant = new Participant();
+        $participant->setPhotoProfil("User.jpg");
+        $participant->setNom("User");
+        $participant->setPrenom("User");
+        $participant->setMail("user@gmail.com");
+        $participant->setTelephone(0600000000);
+        $participant->setPassword($passwordHasher->hashPassword($participant, "UserMDP"));
+        $participant->setPseudo("User");
+        $participant->setRoles(['ROLE_USER']);
         $participant->setActif(true);
         $participant->setCampus($this->faker->randomElement($campus));
 
